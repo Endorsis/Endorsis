@@ -5,13 +5,13 @@
       "src": "frontend/package.json",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["../backend/**"]
+        "distDir": "frontend/dist"
       }
     }
   ],
   "build": {
     "env": {
-      "BUILD_BACKEND": "cd ../backend && pnpm build"
+      "BUILD_BACKEND": "cd backend && pnpm build"
     }
   }
 }

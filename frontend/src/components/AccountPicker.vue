@@ -4,31 +4,38 @@ import { Network, networkName, useEthereumStore } from '../stores/ethereum';
 import JazzIcon from './JazzIcon.vue';
 import { abbrAddr } from '@/utils/utils';
 import { useMedia } from '@/utils/useMediaQuery';
-import { MetaMaskNotInstalledError } from '@/utils/errors';
 import detectEthereumProvider from '@metamask/detect-provider';
 
 const eth = useEthereumStore();
 const netName = computed(() => networkName(eth.network));
 const unkNet = computed(() => eth.network === Network.Unknown);
 const connecting = ref(false);
-const isMetaMaskInstalled = ref(true); // assume installed until proven otherwise
+const isMetaMaskInstalled = ref(false);
 
 async function connectWallet() {
+  console.log("Attempting to connect wallet...");
   if (!isMetaMaskInstalled.value) {
+    console.log("MetaMask not installed, redirecting for installation...");
     window.open('https://metamask.io/download/');
     return;
   }
 
-  if (connecting.value) return;
+  if (connecting.value) {
+    console.log("Connection attempt already in progress...");
+    return;
+  }
+
   connecting.value = true;
   try {
+    console.log("Connecting via eth.connect...");
     await eth.connect();
+    console.log("Connected successfully.");
   } catch (err) {
-    if (err instanceof MetaMaskNotInstalledError) {
-      isMetaMaskInstalled.value = false;
-    } else {
-      console.error("Connection failed:", err);
-    }
+    console.error("Connection failed with error:", err);
+if ((err as Error).message.includes("User denied account authorization")) {
+  console.log("User denied MetaMask connection.");
+}
+    isMetaMaskInstalled.value = false;
   } finally {
     connecting.value = false;
   }
@@ -37,22 +44,17 @@ async function connectWallet() {
 const isXlScreen = useMedia('(min-width: 1280px)');
 
 onMounted(async () => {
-const ethProvider = await detectEthereumProvider();
-if (ethProvider && ethProvider === (window.ethereum as any)) {
+  const ethProvider = await detectEthereumProvider();
+if (ethProvider && window.ethereum && ethProvider as any === window.ethereum as any) {
   console.log("MetaMask is installed.");
-  isMetaMaskInstalled.value = true;
-    try {
-      await eth.getEthereumProvider();
-    } catch (err) {
-      console.error("Failed to get Ethereum provider:", err);
-    }
+    isMetaMaskInstalled.value = true;
   } else {
     console.log("MetaMask is not installed.");
     isMetaMaskInstalled.value = false;
   }
 });
-
 </script>
+
 
 <template>
   <button
@@ -76,6 +78,7 @@ if (ethProvider && ethProvider === (window.ethereum as any)) {
     </span>
   </button>
 </template>
+
 
 <style lang="postcss" scoped>
 .account-picker-content {

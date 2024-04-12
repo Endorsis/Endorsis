@@ -8,6 +8,9 @@ importers:
 
   backend:
     dependencies:
+      '@metamask/detect-provider':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@openzeppelin/contracts':
         specifier: ^4.8.1
         version: 4.8.1

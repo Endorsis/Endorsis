@@ -20,11 +20,12 @@ async function connectWallet() {
     window.open('https://metamask.io/download/');
     return;
   }
-
   if (connecting.value) return;
   connecting.value = true;
   try {
-    await eth.connect();
+    if (window.ethereum) {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+    }
   } catch (err) {
     if (!(err instanceof MetaMaskNotInstalledError)) {
       throw err;

@@ -37,10 +37,10 @@ async function connectWallet() {
 const isXlScreen = useMedia('(min-width: 1280px)');
 
 onMounted(async () => {
-  const ethProvider = await detectEthereumProvider();
+const ethProvider = await detectEthereumProvider();
 if (ethProvider && ethProvider === (window.ethereum as any)) {
   console.log("MetaMask is installed.");
-  // isMetaMaskInstalled.value = true;
+  isMetaMaskInstalled.value = true;
     try {
       await eth.getEthereumProvider();
     } catch (err) {

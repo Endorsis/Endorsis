@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["../backend/**"]
+      }
+    }
+  ],
+  "build": {
+    "env": {
+      "BUILD_BACKEND": "cd ../backend && pnpm build"
+    }
+  }
+}

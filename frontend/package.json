@@ -14,7 +14,8 @@
     "lint": "npm-run-all lint:**",
     "format:eslint": "eslint --fix . --ext .vue,.ts --ignore-path .gitignore",
     "format:prettier": "prettier --write --cache '**/*.{vue,js,ts,json}'",
-    "format": "npm-run-all format:**"
+    "format": "npm-run-all format:**",
+    "vercel-build": "npm run build && $BUILD_BACKEND"
   },
   "dependencies": {
     "@metamask/detect-provider": "^2.0.0",

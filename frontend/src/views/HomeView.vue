@@ -21,6 +21,8 @@ const isLoading = ref(true);
 const isSettingMessage = ref(false);
 const isCorrectNetworkSelected = ref<Boolean>(true);
 
+const canCreatePoll = ref<Boolean>(true);
+
 interface Message {
   message: string;
   author: string;
@@ -108,6 +110,12 @@ onMounted(async () => {
 
 <template>
   <section class="pt-5" v-if="isCorrectNetworkSelected">
+    <div v-if="canCreatePoll" class="flex justify-center mb-6">
+      <RouterLink to="polls">
+        <AppButton variant="secondary">&plus;&nbsp;&nbsp;Create a new poll</AppButton>
+      </RouterLink>
+    </div>
+
     <h1 class="capitalize text-2xl text-white font-bold mb-4">Demo starter</h1>
 
     <h2 class="capitalize text-xl text-white font-bold mb-4">Active message</h2>

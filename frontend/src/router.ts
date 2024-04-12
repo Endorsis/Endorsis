@@ -14,6 +14,17 @@ const router = createRouter({
       path: '/:path(.*)',
       component: () => import('./views/404View.vue'),
     },
+    {
+      path: '/polls/:id([0-9a-fA-F]{64,64})',
+      component: () => import('./views/PollView.vue'),
+      props: true,
+      name: 'poll',
+    },
+    {
+      path: '/polls',
+      component: () => import('./views/CreatePollView.vue'),
+      name: 'createPoll',
+    },
   ],
 });
 

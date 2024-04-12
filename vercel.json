@@ -11,7 +11,8 @@
   ],
   "build": {
     "env": {
-      "BUILD_BACKEND": "cd backend && pnpm build"
+      "BUILD_BACKEND": "cd backend && pnpm build",
+      "LIST_DIRS": "ls -R backend && ls -R frontend"
     }
   }
 }

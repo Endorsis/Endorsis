@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "vercel-build": "npm run build && $BUILD_BACKEND",
     "dev": "vite",
     "build": "run-p type-check build-only",
     "preview": "vite preview",

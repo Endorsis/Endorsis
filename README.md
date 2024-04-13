@@ -21,7 +21,6 @@ Erdorsis, made @ETHDam'24 is a platform for event feedback management. It allows
 1. Log into your account.
 2. Navigate to the 'Create Event' section to set up your event.
 3. Whitelist the companies, workshops, side events etc. and fill in other details.
-4. 
 
 #### For Users
 1. Browse the list of available events on the home screen.

@@ -84,7 +84,7 @@ onMounted(async () => {
 
     <h1 class="capitalize text-2xl text-white font-bold mb-4">Events</h1>
 
-    <div class="events-container">
+    <!-- <div class="events-container">
       <ul class="event-list">
         <li v-for="event in events" :key="event.id" class="event-item">
           <h2 class="event-name">{{ event.name }}</h2>
@@ -93,7 +93,7 @@ onMounted(async () => {
           <p class="event-date">End Date: {{ event.endDate }}</p>
         </li>
       </ul>
-    </div>
+    </div> -->
   </section>
   <section class="pt-5" v-else>
     <h2 class="capitalize text-white text-2xl font-bold mb-4">Invalid network detected</h2>

@@ -2,7 +2,7 @@
   <div class="view-event">
     <h1 class="text-black text-center text-3xl mb-4">Event Details</h1>
     <Event :event="event" />
-    <Endorsee :endorsees="event.endorseees" />
+    <EndorseesList :endorsees="getEndorsees()" />
     <div class="flex justify-center mb-6">
       <RouterLink to="/">
         <AppButton variant="secondary"
@@ -17,10 +17,10 @@
 <script setup lang="ts">
 import { ref, defineProps, type PropType } from 'vue';
 import Event from '@/components/Event.vue';
-import type { EventModel } from '@/models/EventModel';
+import EndorseesList from "@/components/EndorseesList.vue";
+import type { EventModel } from '@/models/EventModel'; // Import as a type
+import { EndorseeModel } from '@/models/EndorseeModel'; // Import as a value
 
-
-// Defining the expected props structure with default values
 const props = defineProps({
   event: {
     type: Object as PropType<EventModel>, // Specify the type of the prop
@@ -28,10 +28,24 @@ const props = defineProps({
       name: 'ETHDam',
       description: 'Privacy focused event',
       startDate: '2024-04-12',
-      endDate: '2024-09-14'
+      endDate: '2024-09-14',
+      //this is not working, haha
+      endorseees: [
+        new EndorseeModel('Endorsee 1', '0x3Dd03d7d6c3137f1Eb7582BaFfE2f4Ef3dE1F730'),
+        new EndorseeModel('Endorsee 2', '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'),
+        new EndorseeModel('me', '0xEBC738Fb142dC0b56fC946E8Ec3076c25E63a650')
+      ],
     })
   }
 });
+
+// I don't know why this is not working, but I cannot take it anymore
+// const getEndorsees = () => event.value.endorseees;
+const getEndorsees = () => [
+    new EndorseeModel('Endorsee 1', '0x3Dd03d7d6c3137f1Eb7582BaFfE2f4Ef3dE1F730'),
+    new EndorseeModel('Endorsee 2', '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'),
+    new EndorseeModel('me', '0xEBC738Fb142dC0b56fC946E8Ec3076c25E63a650')
+  ];
 
 // Using ref to make it reactive
 const event = ref(props.event);

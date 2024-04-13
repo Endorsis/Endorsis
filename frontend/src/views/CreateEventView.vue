@@ -3,7 +3,7 @@
     <h1 class="text-black text-center text-3xl mb-4">Create a New Event</h1>
     <form @submit.prevent="createEvent" class="event-form">
       <AddEndorsee @add="addEndorsee" />
-      <EndorseeList :endorsees="event.endorseees" />
+      <EndorseesList :endorsees="event.endorseees" />
       <div class="form-group">
         <label for="eventName">Event Name:</label>
         <input type="text" id="eventName" v-model="event.name" required class="input-field" />
@@ -54,9 +54,8 @@
 import { ref, computed } from 'vue';
 import { useEthereumStore } from '@/stores/ethereum';
 import AddEndorsee from '../components/AddEndorsee.vue';
-import EndorseeList from '@/components/EndorseeList.vue';
+import EndorseesList from '@/components/EndorseesList.vue';
 import CryptoJS from 'crypto-js';
-import { EventModel } from "@/models/EventModel";
 
 const eth = useEthereumStore();
 const showPassword = ref(false);

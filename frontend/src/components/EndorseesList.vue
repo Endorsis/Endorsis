@@ -16,6 +16,9 @@ const props = withDefaults(defineProps<{
 }>(), {
   endorsees: () => []
 });
+
+console.log(props.endorsees); // Print endorsees to the console
+
 </script>
 
 <style scoped>

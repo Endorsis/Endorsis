@@ -145,24 +145,30 @@ function togglePasswordVisibility() {
 }
 
 .endorsee-list {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .endorsee-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
+  align-items: center;
+  margin-bottom: 10px;
   padding: 10px;
-  background-color: #e3e3e3;
-  border-radius: 5px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .endorsee-name {
   font-weight: bold;
+  color: #333;
 }
 
 .endorsee-address {
-  font-family: monospace; /* Ensures address is easily readable */
+  font-family: monospace;
+  font-weight: bold;
+  color: #555;
 }
 
 .password-input {

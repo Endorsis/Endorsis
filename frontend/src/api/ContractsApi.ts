@@ -10,15 +10,11 @@ export default class ContractsApi {
     ContractsApi.events.set(mockEvent.id, mockEvent);
   }
 
-  async getEndorsees(eventId: string) {
-    // Implement your logic to fetch endorsees from the smart contract
+  async submitFeedback(feedback: string, password: string) {
+    // Implement your logic to claim feedback
   }
 
-  async isUserEndorsee(userId: string, eventId: string) {
-    // Implement your logic to check if the user is an endorsee
-  }
-
-  async claimFeedback(userId: string, eventId: string) {
+  async claimFeedback(password: string) {
     // Implement your logic to claim feedback
   }
 

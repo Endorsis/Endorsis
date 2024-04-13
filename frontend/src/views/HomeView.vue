@@ -5,32 +5,18 @@ import { Network, useEthereumStore } from '../stores/ethereum';
 import AppButton from '@/components/AppButton.vue';
 import Event from "@/components/Event.vue";
 import type { EventModel } from '@/models/EventModel';
+import ContractsApi from '@/api/ContractsApi';
 
+const contractsApi = new ContractsApi();
+const events = ref<EventModel[]>([]);
+
+onMounted(async () => {
+  events.value = await contractsApi.getEvents();
+});
 
 const eth = useEthereumStore();
 
 const isCorrectNetworkSelected = ref<Boolean>(true);
-
-const events: EventModel[] = [
-  {
-    id: "e3271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
-    name: 'ETHDam',
-    description: 'Privacy focused event',
-    startDate: '2024-04-12',
-    endorseees: [],
-    endDate: '2024-09-14',
-    password: ''
-  },
-  {
-    id: "e4271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
-    name: 'ETHRome',
-    description: 'Privacy focused event',
-    startDate: '2024-04-12',
-    endorseees: [],
-    endDate: '2024-09-14',
-    password: ''
-  },
-]
 
 async function connectAndSwitchNetwork() {
   try {

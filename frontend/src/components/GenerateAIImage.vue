@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="generateAIImage(inputText)">
-    <h2 class="text-2xl font-bold mb-4 text-white">Generate AI Image</h2>
+    <h2 class="text-2xl font-bold mb-2 text-white">Generate AI Image</h2>
     <div class="form-group py-4">
       <label for="aiImageText"
         class="block text-white peer-focus:text-primaryDark peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-5">
@@ -22,8 +22,8 @@
       </ul>
     </div>
   </form>
-  <div v-if="isLoading">Loading...</div>
-  <img v-else-if="image" :src="image.url" alt="Generated AI Image" />
+  <div v-if="isLoading" class="pt-4">Loading...</div>
+  <img v-else-if="image" :src="image" alt="Generated AI Image" class="pt-4" />
 </template>
 
 <script setup lang="ts">

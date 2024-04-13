@@ -4,6 +4,7 @@
     <Event :event="event" />
 
     <EventOngoing v-if="isOngoing" :getEndorsees="getEndorsees" />
+    <EventCompleted v-else :isUserEndorsee="isUserEndorsee" />
 
     <div class="flex justify-center mb-6">
       <RouterLink to="/">
@@ -20,9 +21,11 @@
 import { ref, defineProps, type PropType, computed } from 'vue';
 import Event from '@/components/Event.vue';
 import EventOngoing from '@/components/EventOngoing.vue';
+import EventCompleted from '@/components/EventCompleted.vue'; // Import EventCompleted
 import type { EventModel } from '@/models/EventModel'; // Import as a type
 import { EndorseeModel } from '@/models/EndorseeModel'; // Import as a value
 import { useEthereumStore } from '@/stores/ethereum';
+import ContractsApi from '@/api/ContractsApi';
 
 const selectedEndorsee = ref<EndorseeModel | null>(null);
 const selectEndorsee = (endorsee: EndorseeModel) => {

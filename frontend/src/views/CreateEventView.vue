@@ -3,24 +3,11 @@
     <h1 class="text-black text-center text-3xl mb-4">Create a New Event</h1>
     <form @submit.prevent="createEvent" class="event-form">
 
-      <div class="form-group">
-        <label for="Endorseees">Endorsees:</label>
-        <div class="flex items-center mb-2">
-          <input type="text" id="EndorseeName" v-model="newEndorseeName" class="input-field w-half mr-2"
-            placeholder="Enter name of endorsee" />
-          <input type="text" id="EndorseeAddress" v-model="newEndorseeAddress" class="input-field w-half"
-            placeholder="Enter address of endorsee" />
-          <button type="button"
-            class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-            @click="addEndorsee">
-            +
-          </button>
-        </div>
-        <div v-if="event.endorseees.length > 0" class="whitelisted-addresses">
-          <div v-for="(endorsee, index) in event.endorseees" :key="index" class="address-item">
-            <span>{{ endorsee.name }}</span>
-            <span>{{ endorsee.address }}</span>
-          </div>
+      <AddEndorsee @add="addEndorsee" />
+      <div v-if="event.endorseees.length > 0" class="whitelisted-addresses">
+        <div v-for="(endorsee, index) in event.endorseees" :key="index" class="address-item">
+          <span>{{ endorsee.name + ' ' }}</span>
+          <span>{{ endorsee.address.substring(0, 4) + '...' + endorsee.address.slice(-2) }}</span>
         </div>
       </div>
       <div class="form-group">
@@ -72,13 +59,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useEthereumStore } from '@/stores/ethereum';
+import AddEndorsee from '../components/AddEndorsee.vue';
 import CryptoJS from 'crypto-js';
 
 const eth = useEthereumStore();
 const showPassword = ref(false);
-
-const newEndorseeName = ref('');
-const newEndorseeAddress = ref('');
 
 const event = ref({
   creatorAddress: eth.address,
@@ -101,12 +86,8 @@ const eventDuration = computed(() => {
   return '';
 });
 
-function addEndorsee() {
-  if (newEndorseeName.value.trim() && newEndorseeAddress.value.trim()) {
-    event.value.endorseees.push({ name: newEndorseeName.value.trim(), address: newEndorseeAddress.value.trim() });
-    newEndorseeName.value = '';
-    newEndorseeAddress.value = '';
-  }
+function addEndorsee(endorsee: { name: string; address: string }) {
+  event.value.endorseees.push(endorsee);
 }
 
 function calculateEventDuration() {
@@ -175,4 +156,5 @@ function createEvent() {
   font-weight: bold;
   padding: 4px 8px;
   border-radius: 4px;
-}</style>
+}
+</style>

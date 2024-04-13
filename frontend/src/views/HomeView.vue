@@ -1,51 +1,29 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
-import { useMessageBox, useUnwrappedMessageBox } from '../contracts';
 import { Network, useEthereumStore } from '../stores/ethereum';
-import { abbrAddr } from '@/utils/utils';
 import AppButton from '@/components/AppButton.vue';
-import MessageLoader from '@/components/MessageLoader.vue';
-import JazzIcon from '@/components/JazzIcon.vue';
-import { retry } from '@/utils/promise';
-import Event from '@/components/Event.vue';
 
 const eth = useEthereumStore();
-const messageBox = useMessageBox();
-const uwMessageBox = useUnwrappedMessageBox();
 
-const errors = ref<string[]>([]);
-const message = ref('');
-const author = ref('');
-const newMessage = ref('');
-const isLoading = ref(true);
-const isSettingMessage = ref(false);
 const isCorrectNetworkSelected = ref<Boolean>(true);
 
-const canCreateEvent = ref<Boolean>(true);
-const canJoinEvent = ref<Boolean>(true);
-
-interface Message {
-  message: string;
-  author: string;
-}
-
 const events = [
-      {
-        id: 1,
-        name: 'ETHDam',
-        description: 'Privacy focused event',
-        startDate: '2024-04-12',
-        endDate: '2024-09-14'
-      },
-      {
-        id: 2,
-        name: 'ETHRome',
-        description: 'Privacy focused event',
-        startDate: '2024-04-12',
-        endDate: '2024-09-14'
-      },
-    ]
+  {
+    id: 1,
+    name: 'ETHDam',
+    description: 'Privacy focused event',
+    startDate: '2024-04-12',
+    endDate: '2024-09-14'
+  },
+  {
+    id: 2,
+    name: 'ETHRome',
+    description: 'Privacy focused event',
+    startDate: '2024-04-12',
+    endDate: '2024-09-14'
+  },
+]
 
 async function connectAndSwitchNetwork() {
   await eth.connect();
@@ -103,7 +81,8 @@ onMounted(async () => {
     </p>
 
     <div class="flex justify-center">
-      <AppButton variant="secondary" @click="switchNetwork" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+      <AppButton variant="secondary" @click="switchNetwork"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
         Switch network
       </AppButton>
     </div>
@@ -119,7 +98,8 @@ onMounted(async () => {
 
 .events-title {
   font-size: 1.5rem;
-  color: #007BFF; /* Blue color for the heading */
+  color: #007BFF;
+  /* Blue color for the heading */
   margin-bottom: 1rem;
 }
 
@@ -129,7 +109,8 @@ onMounted(async () => {
 }
 
 .event-item {
-  border: 1px solid #ccc; /* Light gray border */
+  border: 1px solid #ccc;
+  /* Light gray border */
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;

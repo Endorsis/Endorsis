@@ -65,6 +65,31 @@ const props = defineProps({
   }
 });
 
+async function setMessage(e: Event): Promise<void> {
+  if (e.target instanceof HTMLFormElement) {
+    e.target.checkValidity();
+    if (!e.target.reportValidity()) return;
+  }
+  e.preventDefault();
+  try {
+    const newMessageValue = newMessage.value;
+    errors.value.splice(0, errors.value.length);
+    isSettingMessage.value = true;
+    await messageBox.value!.setMessage(newMessageValue);
+    await retry<Promise<Message | null>>(fetchAndSetMessageValues, (retrievedMessage) => {
+      if (retrievedMessage?.message !== newMessageValue) {
+        throw new Error('Unable to determine if the new message has been correctly set!');
+      }
+      return retrievedMessage;
+    });
+    newMessage.value = '';
+  } catch (e: any) {
+    handleError(e, 'Failed to set message');
+  } finally {
+    isSettingMessage.value = false;
+  }
+}
+
 async function fetchAndSetMessageValues(): Promise<Message | null> {
   let retrievedMessage: Message | null = null;
 

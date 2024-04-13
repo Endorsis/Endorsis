@@ -9,6 +9,11 @@
     />
     <button @click="joinEvent" class="join-btn">Join Event</button>
   </div>
+  <div class="flex justify-center mb-6">
+      <RouterLink to="/">
+        <AppButton variant="secondary">Return</AppButton>
+      </RouterLink>
+  </div>
 </template>
 
 <script setup lang="ts">

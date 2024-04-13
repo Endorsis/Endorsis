@@ -115,8 +115,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="pt-5" v-if="isCorrectNetworkSelected">
-    <h1 class="capitalize text-2xl text-white font-bold mb-4">Login Page</h1>
+  <section class="login-section" v-if="isCorrectNetworkSelected">
+    <h1 class="welcome-text">Welcome to Endorsis</h1>
+    <p class="description-text">The Web3 endorsing events platform</p>
   </section>
   <section class="pt-5" v-else>
     <h2 class="capitalize text-white text-2xl font-bold mb-4">Invalid network detected</h2>
@@ -132,27 +133,24 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="postcss">
-input {
-  @apply block my-4 p-1 mx-auto text-3xl border border-gray-400 rounded-xl;
+.login-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.form-group {
-  @apply relative mb-6;
+.welcome-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffffff; /* Couleur du texte */
+  text-align: center;
+  margin-top: 25%;
 }
 
-.form-group input,
-textarea {
-  @apply block rounded-xl py-6 px-5 w-full text-base text-black appearance-none focus:outline-none focus:ring-0 bg-white;
-}
-
-.form-group label {
-  @apply absolute text-base text-primaryDark duration-300 transform -translate-y-5 scale-75 top-6 z-10 origin-[0] left-5;
-}
-
-.message {
-  @apply bg-white rounded-xl border-primary;
-  border-width: 3px;
-  border-style: solid;
-  box-shadow: 0 7px 7px 0 rgba(0, 0, 0, 0.17);
+.description-text {
+  font-size: 1.5rem;
+  color: #ffffff; /* Couleur du texte */
+  text-align: center;
 }
 </style>

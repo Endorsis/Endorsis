@@ -30,10 +30,7 @@ interface Message {
   author: string;
 }
 
-const props = defineProps({
-  events: {
-    type: Array,
-    default: () => ([
+const events = [
       {
         id: 1,
         name: 'ETHDam',
@@ -48,10 +45,7 @@ const props = defineProps({
         startDate: '2024-04-12',
         endDate: '2024-09-14'
       },
-      // Add more events here if needed
-    ])
-  }
-});
+    ]
 
 async function connectAndSwitchNetwork() {
   await eth.connect();

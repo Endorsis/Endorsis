@@ -19,7 +19,7 @@ import { ref, defineProps, type PropType } from 'vue';
 import EndorseesList from "@/components/EndorseesList.vue";
 import type { EndorseeModel } from '@/models/EndorseeModel';
 import PasswordField from '../components/PasswordField.vue';
-
+import ContractsApi from "@/api/ContractsApi";
 
 const selectedEndorsee = ref<EndorseeModel | null>(null);
 const selectEndorsee = (endorsee: EndorseeModel) => {
@@ -37,6 +37,8 @@ const feedback = ref('');
 const password = ref('');
 
 const submitFeedback = () => {
-  // Implement your feedback submission logic here
+  new ContractsApi().submitFeedback(feedback.value, password.value);
+  //todo display error if not 200
+  //todo if 200 display success, clear fiedls
 };
 </script>

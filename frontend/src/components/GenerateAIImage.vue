@@ -27,13 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import AppButton from '@/components/AppButton.vue';
 
 const inputText = ref(''); // replace with your input text
 const isLoading = ref(false);
 const image = ref(null);
-const errors = ref([]);
+const errors: Ref<string[]> = ref([]);
 
 async function generateAIImage(text: string) {
   isLoading.value = true;
@@ -49,7 +49,7 @@ async function generateAIImage(text: string) {
     image.value = data.image_url; // Extract the image URL from the response
   } catch (error) {
     console.error(error);
-    errors.value.push(error.message);
+    errors.value.push((error as Error).message);
   } finally {
     isLoading.value = false;
   }

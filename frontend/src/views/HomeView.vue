@@ -30,18 +30,6 @@ interface Message {
   author: string;
 }
 
-function handleError(error: Error, errorMessage: string) {
-  errors.value.push(`${errorMessage}: ${error.message ?? JSON.stringify(error)}`);
-  console.error(error);
-}
-
-async function fetchMessage(): Promise<Message> {
-  const message = await messageBox.value!.message();
-  const author = await messageBox.value!.author();
-
-  return { message, author };
-}
-
 const props = defineProps({
   events: {
     type: Array,
@@ -65,28 +53,6 @@ const props = defineProps({
   }
 });
 
-async function fetchAndSetMessageValues(): Promise<Message | null> {
-  let retrievedMessage: Message | null = null;
-
-  try {
-    retrievedMessage = await fetchMessage();
-    message.value = retrievedMessage.message;
-    author.value = retrievedMessage.author;
-
-    return retrievedMessage;
-  } catch (e) {
-    handleError(e as Error, 'Failed to get message');
-  } finally {
-    isLoading.value = false;
-  }
-
-  return retrievedMessage;
-}
-
-async function switchNetwork() {
-  await eth.switchNetwork(Network.FromConfig);
-}
-
 async function connectAndSwitchNetwork() {
   await eth.connect();
   isCorrectNetworkSelected.value = await eth.checkIsCorrectNetwork();
@@ -96,29 +62,35 @@ async function connectAndSwitchNetwork() {
   isCorrectNetworkSelected.value = await eth.checkIsCorrectNetwork();
 }
 
+async function switchNetwork() {
+  await eth.switchNetwork(Network.FromConfig);
+}
+
 onMounted(async () => {
   await connectAndSwitchNetwork();
-  await fetchAndSetMessageValues();
 });
 </script>
 
 <template>
   <section class="pt-5" v-if="isCorrectNetworkSelected">
     <div class="flex justify-center mb-6">
-      <!-- Create Event Button -->
       <RouterLink to="new_event">
-        <AppButton class="mr-2" variant="secondary">&plus;&nbsp;&nbsp;Create a new event</AppButton>
+        <AppButton class="mr-2" variant="secondary">
+          <span class="text-xl font-bold">&plus;</span>
+          <span class="ml-2">Create a new event</span>
+        </AppButton>
       </RouterLink>
-      <!-- Join Event Button -->
       <RouterLink to="join_event">
-        <AppButton variant="secondary">&plus;&nbsp;&nbsp;Join existing event</AppButton>
+        <AppButton variant="secondary">
+          <span class="text-xl font-bold">&plus;</span>
+          <span class="ml-2">Join existing event</span>
+        </AppButton>
       </RouterLink>
     </div>
 
-    <h1 class="capitalize text-2xl text-white font-bold mb-4">Demo starter</h1>
+    <h1 class="capitalize text-2xl text-white font-bold mb-4">Events</h1>
 
-    <!-- <div class="events-container">
-      <h1 class="events-title">Events</h1>
+    <div class="events-container">
       <ul class="event-list">
         <li v-for="event in events" :key="event.id" class="event-item">
           <h2 class="event-name">{{ event.name }}</h2>
@@ -127,8 +99,7 @@ onMounted(async () => {
           <p class="event-date">End Date: {{ event.endDate }}</p>
         </li>
       </ul>
-    </div> -->
-
+    </div>
   </section>
   <section class="pt-5" v-else>
     <h2 class="capitalize text-white text-2xl font-bold mb-4">Invalid network detected</h2>
@@ -138,36 +109,14 @@ onMounted(async () => {
     </p>
 
     <div class="flex justify-center">
-      <AppButton variant="secondary" @click="switchNetwork">Switch network</AppButton>
+      <AppButton variant="secondary" @click="switchNetwork" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+        Switch network
+      </AppButton>
     </div>
   </section>
 </template>
 
 <style scoped lang="postcss">
-input {
-  @apply block my-4 p-1 mx-auto text-3xl border border-gray-400 rounded-xl;
-}
-
-.form-group {
-  @apply relative mb-6;
-}
-
-.form-group input,
-textarea {
-  @apply block rounded-xl py-6 px-5 w-full text-base text-black appearance-none focus:outline-none focus:ring-0 bg-white;
-}
-
-.form-group label {
-  @apply absolute text-base text-primaryDark duration-300 transform -translate-y-5 scale-75 top-6 z-10 origin-[0] left-5;
-}
-
-.message {
-  @apply bg-white rounded-xl border-primary;
-  border-width: 3px;
-  border-style: solid;
-  box-shadow: 0 7px 7px 0 rgba(0, 0, 0, 0.17);
-}
-
 .events-container {
   max-width: 800px;
   margin: 0 auto;

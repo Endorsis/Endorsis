@@ -4,7 +4,7 @@
     <form @submit.prevent="createEvent" class="event-form">
       <div class="form-group">
         <label for="eventName">Event Name:</label>
-        <input type="text" id="eventName" v-model="event.name" required class="input-field">
+        <input type="text" id="eventName" v-model="event.name" required class="input-field" />
       </div>
       <div class="form-group">
         <label for="eventDescription">Description:</label>
@@ -12,17 +12,19 @@
       </div>
       <div class="form-group">
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" v-model="event.startDate" required class="input-field">
+        <input type="date" id="startDate" v-model="event.startDate" required class="input-field" />
       </div>
       <div class="form-group">
         <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" v-model="event.endDate" required class="input-field">
+        <input type="date" id="endDate" v-model="event.endDate" required class="input-field" />
       </div>
       <button type="submit" class="submit-btn">Create Event</button>
     </form>
     <div class="flex justify-center mb-6">
       <RouterLink to="/">
-        <AppButton variant="secondary">Return</AppButton>
+        <AppButton variant="secondary" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+          Return
+        </AppButton>
       </RouterLink>
     </div>
   </div>

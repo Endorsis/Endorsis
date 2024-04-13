@@ -1,57 +1,49 @@
 <template>
-  <div class="join-event">
-    <input
-      type="text"
-      v-model="contractAddress"
-      placeholder="Enter contract address"
-      @keyup.enter="joinEvent"
-      class="input-field bg-gray-200 focus:bg-white focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
-    />
-    <button
-      @click="joinEvent"
-      class="join-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-    >
-      Join Event
-    </button>
-  </div>
-  <div class="flex justify-center mb-6">
-    <div class="event-list">
-      <div
-        v-for="event in events"
-        :key="event.id"
-        class="event-item bg-gray-200 hover:bg-gray-300 transition duration-300 ease-in-out cursor-pointer"
-        @click="contractAddress = event.id"
-      >
-        <h3>{{ event.name }}</h3>
-        <p>{{ event.description }}</p>
-        <p>Start: {{ event.startDate }}</p>
-        <p>End: {{ event.endDate }}</p>
-      </div>
+  <form @submit.prevent="joinEventWithPassword">
+    <div class="events-container">
+      <ul class="event-list" style="max-height: 300px; overflow-y: auto;">
+        <li v-for="event in events" :key="event.id">
+          <label :for="'event-'+ event.id" class="event-label">
+            <input
+              type="radio"
+              :id="'event-' + event.id"
+              :value="event.id"
+              v-model="contractAddress"
+            />
+            <div class="event-info">
+              <h3>{{ event.name }}</h3>
+              <p>{{ event.description }}</p>
+              <p>Start: {{ event.startDate }}</p>
+              <p>End: {{ event.endDate }}</p>
+            </div>
+          </label>
+        </li>
+      </ul>
     </div>
-    <RouterLink to="/">
-      <AppButton
-        variant="secondary"
-        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded relative top-2 transition duration-300 ease-in-out hover:transform hover:-translate-y-1"
+
+    <div class="password-input">
+      <input
+        type="password"
+        v-model="password"
+        placeholder="Enter password"
+        class="input-field bg-gray-200 focus:bg-white focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
+      />
+      <button
+        type="submit"
+        class="join-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
       >
-        Return
-      </AppButton>
-    </RouterLink>
-  </div>
-  <div v-if="showPasswordInput" class="password-input">
-    <input
-      type="password"
-      v-model="password"
-      placeholder="Enter password"
-      @keyup.enter="joinEventWithPassword"
-      class="input-field bg-gray-200 focus:bg-white focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
-    />
-    <button
-      @click="joinEventWithPassword"
-      class="join-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+        Join Event
+      </button>
+    </div>
+  </form>
+  <RouterLink to="/">
+    <AppButton
+      variant="secondary"
+      class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded relative top-2 transition duration-300 ease-in-out hover:transform hover:-translate-y-1"
     >
-      Join Event
-    </button>
-  </div>
+      Return
+    </AppButton>
+  </RouterLink>
 </template>
 
 <script setup lang="ts">
@@ -72,36 +64,21 @@ const events = [
     startDate: '2024-04-12',
     endDate: '2024-09-14',
   },
+  {
+    id: 'e7871995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad',
+    name: 'ETHOxford',
+    description: 'Privacy focused event',
+    startDate: '2024-04-12',
+    endDate: '2024-09-14',
+  },
 ];
 
 const contractAddress = ref('');
 const password = ref('');
-const showPasswordInput = ref(false);
-
-function joinEvent() {
-  if (contractAddress.value.trim()) {
-    console.log('Joining event at:', contractAddress.value);
-
-    // Check if the contract address matches any of the events
-    const matchingEvent = events.find((event) => event.id === contractAddress.value);
-    if (matchingEvent) {
-      // If the event requires a password, show the password input
-      showPasswordInput.value = true;
-    } else {
-      // If the event doesn't require a password, proceed with joining the event
-      joinEventWithPassword();
-    }
-
-    contractAddress.value = '';
-  }
-}
 
 function joinEventWithPassword() {
-  if (password.value.trim()) {
-    console.log('Joining event with password:', password.value);
-    password.value = '';
-    showPasswordInput.value = false;
-  }
+  console.log('contract address:', contractAddress);
+  console.log('Password:', password);
 }
 </script>
 
@@ -138,6 +115,24 @@ function joinEventWithPassword() {
   padding: 16px;
   border-radius: 4px;
   cursor: pointer;
+}
+.event-label {
+  display: block;
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff; /* White background */
+}
+
+.event-info {
+  margin-left: 30px; /* Indentation for the event info */
+}
+
+.events-container {
+  border: 1px solid #ccc; /* Border color for the container */
+  border-radius: 4px;
+  padding: 10px;
 }
 
 .password-input {

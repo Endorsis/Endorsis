@@ -45,7 +45,7 @@ function createEvent() {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f0f8ff; // Light blue background
+  background-color: #f0f8ff; /* Light blue background */
   border-radius: 8px;
 }
 
@@ -67,7 +67,7 @@ function createEvent() {
   display: block;
   width: 100%;
   padding: 10px 20px;
-  background-color: #007BFF; // Bright blue button
+  background-color: #007BFF; /* Bright blue button */
   color: white;
   border: none;
   border-radius: 4px;

@@ -8,6 +8,7 @@ import AppButton from '@/components/AppButton.vue';
 import MessageLoader from '@/components/MessageLoader.vue';
 import JazzIcon from '@/components/JazzIcon.vue';
 import { retry } from '@/utils/promise';
+import Event from '@/components/Event.vue';
 
 const eth = useEthereumStore();
 const messageBox = useMessageBox();

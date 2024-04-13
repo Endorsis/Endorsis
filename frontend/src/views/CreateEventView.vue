@@ -35,7 +35,7 @@ const event = ref({
   name: '',
   description: '',
   startDate: '',
-  endDate: ''
+  endDate: '',
 });
 
 function createEvent() {

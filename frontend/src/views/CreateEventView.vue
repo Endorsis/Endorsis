@@ -115,22 +115,27 @@ function createEvent() {
   margin: 0 auto;
   padding: 20px;
   background-color: #f0f8ff;
-  /* Light blue background */
   border-radius: 8px;
 }
 
 .form-group {
-  @apply relative mb-6;
-}
-
-.form-group input,
-.form-group textarea {
-  @apply block my-4 p-1 mx-auto text-3xl border border-gray-400 rounded-xl;
-  @apply rounded-xl py-6 px-5 w-full text-base text-black appearance-none focus:outline-none focus:ring-0 bg-white;
+  margin-bottom: 16px;
 }
 
 .form-group label {
-  @apply absolute text-base text-primaryDark duration-300 transform -translate-y-5 scale-75 top-6 z-10 origin-[0] left-5;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.input-field, .textarea-field {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 .submit-btn {
@@ -138,25 +143,24 @@ function createEvent() {
   width: 100%;
   padding: 10px 20px;
   background-color: #007bff;
-  /* Bright blue button */
   color: white;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
-}
-
-.message {
-  @apply bg-white rounded-xl border-primary;
-  border-width: 3px;
-  border-style: solid;
-  box-shadow: 0 7px 7px 0 rgba(0, 0, 0, 0.17);
 }
 
 .whitelisted-addresses {
-  @apply flex flex-wrap gap-2 mt-2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-top: 2px;
 }
 
 .address-item {
-  @apply bg-gray-200 text-gray-800 font-bold py-1 px-2 rounded;
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
+
 </style>

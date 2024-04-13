@@ -1,5 +1,9 @@
+import type { EndorseeModel } from "@/models/EndorseeModel";
+import { EventModel } from "@/models/EventModel";
+
 export default class ContractsApi {
-  // Define your methods that interact with the smart contracts here
+  private static events: Map<string, EventModel> = new Map();
+
 
   async getEndorsees(eventId: string) {
     // Implement your logic to fetch endorsees from the smart contract
@@ -14,27 +18,14 @@ export default class ContractsApi {
   }
 
   async getEvents() {
-    // Mock data for events
-    const events = [
-      {
-        id: "e3271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
-        name: 'EthNeDam',
-        description: 'Privacy focused event',
-        startDate: '2024-04-12',
-        endorseees: [],
-        endDate: '2024-09-14',
-        password: ''
-      },
-      {
-        id: "e4271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
-        name: 'ETHRome',
-        description: 'Privacy focused event',
-        startDate: '2024-04-12',
-        endorseees: [],
-        endDate: '2024-09-14',
-        password: ''
-      },
-    ];
-    return events;
+    return Array.from(ContractsApi.events.values());
   }
+
+  async createEvent(name: string, description: string, endorseees: EndorseeModel[], startDate: string, endDate: string, password: string) {
+    const event = new EventModel('id', name, description, endorseees, startDate, endDate, password);
+    ContractsApi.events.set(event.id, event);
+
+    console.log(`events: ${ContractsApi.events}`);
+  }
+
 }

@@ -12,6 +12,7 @@ const events = ref<EventModel[]>([]);
 
 onMounted(async () => {
   events.value = await contractsApi.getEvents();
+  console.log(`HomeView events: ${events.value}`)
 });
 
 const eth = useEthereumStore();

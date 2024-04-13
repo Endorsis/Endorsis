@@ -41,7 +41,6 @@ if ((err as Error).message.includes("User denied account authorization")) {
   }
 }
 
-const isXlScreen = useMedia('(min-width: 1280px)');
 
 onMounted(async () => {
   const ethProvider = await detectEthereumProvider();
@@ -63,10 +62,10 @@ if (ethProvider && window.ethereum && ethProvider as any === window.ethereum as 
     @click="connectWallet"
   >
     <span class="account-picker-content" v-if="!connecting && eth.address">
-      <JazzIcon :size="isXlScreen ? 60 : 30" :address="eth.address" />
+      <JazzIcon :size="30" :address="eth.address" />
       <span class="font-mono font-bold">
         <abbr :title="eth.address">{{ abbrAddr(eth.address) }}</abbr>
-        <span v-if="isXlScreen" class="font-normal" :class="{ 'unk-net': unkNet }">{{ netName }}</span>
+        <span class="font-normal">{{ netName }}</span>
       </span>
     </span>
     <span class="account-picker-content" v-else-if="!isMetaMaskInstalled">
@@ -82,21 +81,18 @@ if (ethProvider && window.ethereum && ethProvider as any === window.ethereum as 
 
 <style lang="postcss" scoped>
 .account-picker-content {
-  @apply inline-flex items-center gap-2 xl:gap-6;
+  @apply inline-flex items-center gap-2;
 }
 
 .account-picker {
-  @apply inline-flex items-center border border-gray-900 rounded-xl bg-white border-primaryDark h-12 p-2 xl:p-4 xl:fixed xl:right-10 xl:top-28 xl:h-auto;
+  @apply inline-flex items-center border border-gray-900 rounded-xl bg-white border-primaryDark h-12 p-2;
   border-width: 3px;
   border-style: solid;
 
-  @media (max-width: 1280px) {
-    border-width: 1px;
-  }
 }
 
 span {
-  @apply text-base text-primaryDark text-right xl:text-xl;
+  @apply text-base text-primaryDark text-right;
 }
 
 .unk-net {

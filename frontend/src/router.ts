@@ -28,12 +28,12 @@ const router = createRouter({
       name: 'event',
       meta: { requiresAuth: true },
     },
-    {
-      path: '/join_event',
-      component: () => import('./views/JoinEventView.vue'),
-      name: 'joinEvent',
-      meta: { requiresAuth: true },
-    },
+    // {
+    //   path: '/join_event',
+    //   component: () => import('./views/JoinEventView.vue'),
+    //   name: 'joinEvent',
+    //   meta: { requiresAuth: true },
+    // },
     {
       path: '/new_event',
       component: () => import('./views/CreateEventView.vue'),

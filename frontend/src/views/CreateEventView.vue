@@ -1,24 +1,24 @@
 <template>
-  <div class="create-poll">
-    <h1 class="text-black text-center text-3xl mb-4">Create a New Poll</h1>
-    <form @submit.prevent="createPoll" class="poll-form">
+  <div class="create-event">
+    <h1 class="text-black text-center text-3xl mb-4">Create a New Event</h1>
+    <form @submit.prevent="createEvent" class="event-form">
       <div class="form-group">
-        <label for="pollName">Poll Name:</label>
-        <input type="text" id="pollName" v-model="poll.name" required class="input-field">
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" v-model="event.name" required class="input-field">
       </div>
       <div class="form-group">
-        <label for="pollDescription">Description:</label>
-        <textarea id="pollDescription" v-model="poll.description" required class="textarea-field"></textarea>
+        <label for="eventDescription">Description:</label>
+        <textarea id="eventDescription" v-model="event.description" required class="textarea-field"></textarea>
       </div>
       <div class="form-group">
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" v-model="poll.startDate" required class="input-field">
+        <input type="date" id="startDate" v-model="event.startDate" required class="input-field">
       </div>
       <div class="form-group">
         <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" v-model="poll.endDate" required class="input-field">
+        <input type="date" id="endDate" v-model="event.endDate" required class="input-field">
       </div>
-      <button type="submit" class="submit-btn">Create Poll</button>
+      <button type="submit" class="submit-btn">Create Event</button>
     </form>
   </div>
 </template>
@@ -26,26 +26,26 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const poll = ref({
+const event = ref({
   name: '',
   description: '',
   startDate: '',
   endDate: ''
 });
 
-function createPoll() {
-  // smart contract logic here
-  console.log('Creating poll:', poll.value);
-  // taking abi and contract address from the backend
+function createEvent() {
+  // Implement smart contract logic to create an event here
+  console.log('Creating Event:', event.value);
+  // Optionally interact with a smart contract using ABI and contract address
 }
 </script>
 
 <style scoped lang="postcss">
-.create-poll {
+.create-event {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f0f8ff;
+  background-color: #f0f8ff; // Light blue background
   border-radius: 8px;
 }
 
@@ -67,7 +67,7 @@ function createPoll() {
   display: block;
   width: 100%;
   padding: 10px 20px;
-  background-color: #007BFF;
+  background-color: #007BFF; // Bright blue button
   color: white;
   border: none;
   border-radius: 4px;

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 import HomeView from './views/HomeView.vue';
+import LoginView from './views/LoginView.vue';
 
 const router = createRouter({
   strict: true,
@@ -9,6 +10,10 @@ const router = createRouter({
     {
       path: `/`,
       component: HomeView,
+    },
+    {
+      path: `/login`,
+      component: LoginView,
     },
     {
       path: '/:path(.*)',
@@ -21,7 +26,12 @@ const router = createRouter({
       name: 'event',
     },
     {
-      path: '/events',
+      path: '/join_event',
+      component: () => import('./views/JoinEventView.vue'),
+      name: 'joinEvent',
+    },
+    {
+      path: '/new_event',
       component: () => import('./views/CreateEventView.vue'),
       name: 'createEvent',
     },

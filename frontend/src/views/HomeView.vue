@@ -41,6 +41,29 @@ async function fetchMessage(): Promise<Message> {
   return { message, author };
 }
 
+const props = defineProps({
+  events: {
+    type: Array,
+    default: () => ([
+      {
+        id: 1,
+        name: 'ETHDam',
+        description: 'Privacy focused event',
+        startDate: '2024-04-12',
+        endDate: '2024-09-14'
+      },
+      {
+        id: 2,
+        name: 'ETHRome',
+        description: 'Privacy focused event',
+        startDate: '2024-04-12',
+        endDate: '2024-09-14'
+      },
+      // Add more events here if needed
+    ])
+  }
+});
+
 async function fetchAndSetMessageValues(): Promise<Message | null> {
   let retrievedMessage: Message | null = null;
 
@@ -57,37 +80,6 @@ async function fetchAndSetMessageValues(): Promise<Message | null> {
   }
 
   return retrievedMessage;
-}
-
-async function setMessage(e: Event): Promise<void> {
-  if (e.target instanceof HTMLFormElement) {
-    e.target.checkValidity();
-    if (!e.target.reportValidity()) return;
-  }
-
-  e.preventDefault();
-
-  try {
-    const newMessageValue = newMessage.value;
-    errors.value.splice(0, errors.value.length);
-    isSettingMessage.value = true;
-
-    await messageBox.value!.setMessage(newMessageValue);
-
-    await retry<Promise<Message | null>>(fetchAndSetMessageValues, (retrievedMessage) => {
-      if (retrievedMessage?.message !== newMessageValue) {
-        throw new Error('Unable to determine if the new message has been correctly set!');
-      }
-
-      return retrievedMessage;
-    });
-
-    newMessage.value = '';
-  } catch (e: any) {
-    handleError(e, 'Failed to set message');
-  } finally {
-    isSettingMessage.value = false;
-  }
 }
 
 async function switchNetwork() {
@@ -124,61 +116,18 @@ onMounted(async () => {
 
     <h1 class="capitalize text-2xl text-white font-bold mb-4">Demo starter</h1>
 
-    <h2 class="capitalize text-xl text-white font-bold mb-4">Active message</h2>
-
-    <div class="message p-6 mb-6 rounded-xl border-2 border-gray-300" v-if="!isLoading">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg lg:text-lg m-0">{{ message }}</h2>
-        <div class="flex items-center flex-shrink-0">
-          <JazzIcon class="mr-2" :size="20" :address="author" />
-          <abbr :title="author" class="font-mono block no-underline">{{ abbrAddr(author) }}</abbr>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <div class="message p-6 pt-4 mb-6 rounded-xl border-2 border-gray-300">
-        <MessageLoader />
-      </div>
+    <div class="events-container">
+      <h1 class="events-title">Events</h1>
+      <ul class="event-list">
+        <li v-for="event in events" :key="event.id" class="event-item">
+          <h2 class="event-name">{{ event.name }}</h2>
+          <p class="event-description">{{ event.description }}</p>
+          <p class="event-date">Start Date: {{ event.startDate }}</p>
+          <p class="event-date">End Date: {{ event.endDate }}</p>
+        </li>
+      </ul>
     </div>
 
-    <h2 class="capitalize text-xl text-white font-bold mb-4">Set message</h2>
-    <p class="text-base text-white mb-10">
-      Set your new message by filling the message field bellow.
-    </p>
-
-    <form @submit="setMessage">
-      <div class="form-group">
-        <input
-          type="text"
-          id="newMessageText"
-          class="peer"
-          placeholder=" "
-          v-model="newMessage"
-          required
-          :disabled="isSettingMessage"
-        />
-
-        <label
-          for="newMessageText"
-          class="peer-focus:text-primaryDark peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-5"
-        >
-          New message:
-          <span class="text-red-500">*</span>
-        </label>
-      </div>
-
-      <AppButton type="submit" variant="primary" :disabled="isSettingMessage">
-        <span v-if="isSettingMessage">Setting…</span>
-        <span v-else>Set Message</span>
-      </AppButton>
-
-      <div v-if="errors.length > 0" class="text-red-500 px-3 mt-5 rounded-xl-sm">
-        <span class="font-bold">Errors:</span>
-        <ul class="list-disc px-8">
-          <li v-for="error in errors" :key="error">{{ error }}</li>
-        </ul>
-      </div>
-    </form>
   </section>
   <section class="pt-5" v-else>
     <h2 class="capitalize text-white text-2xl font-bold mb-4">Invalid network detected</h2>
@@ -216,5 +165,45 @@ textarea {
   border-width: 3px;
   border-style: solid;
   box-shadow: 0 7px 7px 0 rgba(0, 0, 0, 0.17);
+}
+
+.events-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.events-title {
+  font-size: 1.5rem;
+  color: #007BFF; /* Blue color for the heading */
+  margin-bottom: 1rem;
+}
+
+.event-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.event-item {
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.event-name {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-description,
+.event-date {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.event-date:last-child {
+  margin-bottom: 0;
 }
 </style>

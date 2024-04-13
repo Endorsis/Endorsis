@@ -4,20 +4,53 @@
     <div class="event-form">
       <div class="form-group">
         <label for="eventName">Event Name:</label>
-        <input type="text" id="eventName" v-model="event.name" disabled class="input-field">
+        <input
+          type="text"
+          id="eventName"
+          v-model="event.name"
+          disabled
+          class="input-field bg-gray-200 focus:bg-white focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
+        />
       </div>
       <div class="form-group">
         <label for="eventDescription">Description:</label>
-        <textarea id="eventDescription" v-model="event.description" disabled class="textarea-field"></textarea>
+        <textarea
+          id="eventDescription"
+          v-model="event.description"
+          disabled
+          class="textarea-field bg-gray-200 focus:bg-white focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
+        ></textarea>
       </div>
       <div class="form-group">
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" v-model="event.startDate" disabled class="input-field">
+        <input
+          type="date"
+          id="startDate"
+          v-model="event.startDate"
+          disabled
+          class="input-field bg-gray-200 focus:bg-white focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
+        />
       </div>
       <div class="form-group">
         <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" v-model="event.endDate" disabled class="input-field">
+        <input
+          type="date"
+          id="endDate"
+          v-model="event.endDate"
+          disabled
+          class="input-field bg-gray-200 focus:bg-white focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
+        />
       </div>
+    </div>
+    <div class="flex justify-center mb-6">
+      <RouterLink to="/">
+        <AppButton
+          variant="secondary"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded relative top-2 transition duration-300 ease-in-out hover:transform hover:-translate-y-1"
+        >
+          Return
+        </AppButton>
+      </RouterLink>
     </div>
   </div>
 </template>

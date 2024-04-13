@@ -3,27 +3,29 @@ import { onMounted, ref } from 'vue';
 
 import { Network, useEthereumStore } from '../stores/ethereum';
 import AppButton from '@/components/AppButton.vue';
+import Event, { type EventData } from "@/components/Event.vue";
+
 
 const eth = useEthereumStore();
 
 const isCorrectNetworkSelected = ref<Boolean>(true);
 
-const events = [
-      {
-        id: "e3271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
-        name: 'ETHDam',
-        description: 'Privacy focused event',
-        startDate: '2024-04-12',
-        endDate: '2024-09-14'
-      },
-      {
-        id: "e4271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
-        name: 'ETHRome',
-        description: 'Privacy focused event',
-        startDate: '2024-04-12',
-        endDate: '2024-09-14'
-      },
-    ]
+const events: EventData[] = [
+  {
+    id: "e3271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
+    name: 'ETHDam',
+    description: 'Privacy focused event',
+    startDate: '2024-04-12',
+    endDate: '2024-09-14'
+  },
+  {
+    id: "e4271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
+    name: 'ETHRome',
+    description: 'Privacy focused event',
+    startDate: '2024-04-12',
+    endDate: '2024-09-14'
+  },
+]
 
 async function connectAndSwitchNetwork() {
   try {
@@ -70,17 +72,8 @@ onMounted(async () => {
 
     <div class="events-container">
       <ul class="event-list">
-        <router-link
-          v-for="event in events"
-          :key="event.id"
-          :to="'/events/' + event.id"
-          class="event-item"
-          tag="li"
-        >
-          <h2 class="event-name">{{ event.name }}</h2>
-          <p class="event-description">{{ event.description }}</p>
-          <p class="event-date">Start Date: {{ event.startDate }}</p>
-          <p class="event-date">End Date: {{ event.endDate }}</p>
+        <router-link v-for="event in events" :key="event.id" :to="'/events/' + event.id" class="event-item" tag="li">
+          <Event :event="event" />
         </router-link>
       </ul>
     </div>
@@ -108,13 +101,6 @@ onMounted(async () => {
   padding: 20px;
 }
 
-.events-title {
-  font-size: 1.5rem;
-  color: #007BFF;
-  /* Blue color for the heading */
-  margin-bottom: 1rem;
-}
-
 .event-list {
   list-style-type: none;
   padding: 0;
@@ -122,27 +108,15 @@ onMounted(async () => {
 
 .event-item {
   display: block;
-  border: 1px solid #ccc; /* Light gray border */
+  border: 1px solid #ccc;
+  /* Light gray border */
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
   background-color: white;
-  text-decoration: none; /* Remove default link underline */
-  color: inherit; /* Inherit text color from parent */
-}
-
-.event-name {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.event-description,
-.event-date {
-  font-size: 1rem;
-  margin-bottom: 0.25rem;
-}
-
-.event-date:last-child {
-  margin-bottom: 0;
+  text-decoration: none;
+  /* Remove default link underline */
+  color: inherit;
+  /* Inherit text color from parent */
 }
 </style>

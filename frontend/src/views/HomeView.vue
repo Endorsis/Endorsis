@@ -3,27 +3,32 @@ import { onMounted, ref } from 'vue';
 
 import { Network, useEthereumStore } from '../stores/ethereum';
 import AppButton from '@/components/AppButton.vue';
-import Event, { type EvenModel } from "@/components/Event.vue";
+import Event from "@/components/Event.vue";
+import type { EventModel } from '@/models/EventModel';
 
 
 const eth = useEthereumStore();
 
 const isCorrectNetworkSelected = ref<Boolean>(true);
 
-const events: EvenModel[] = [
+const events: EventModel[] = [
   {
     id: "e3271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
     name: 'ETHDam',
     description: 'Privacy focused event',
     startDate: '2024-04-12',
-    endDate: '2024-09-14'
+    endorseees: [],
+    endDate: '2024-09-14',
+    password: ''
   },
   {
     id: "e4271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
     name: 'ETHRome',
     description: 'Privacy focused event',
     startDate: '2024-04-12',
-    endDate: '2024-09-14'
+    endorseees: [],
+    endDate: '2024-09-14',
+    password: ''
   },
 ]
 

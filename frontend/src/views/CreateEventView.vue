@@ -48,12 +48,17 @@ import AddEndorsee from '../components/AddEndorsee.vue';
 import EndorseesList from '@/components/EndorseesList.vue';
 import PasswordField from '../components/PasswordField.vue';
 import CryptoJS from 'crypto-js';
+import ContractsApi from '@/api/ContractsApi';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const contractsApi = new ContractsApi();
 
 const eth = useEthereumStore();
 const showPassword = ref(false);
 
 const event = ref({
-  creatorAddress: eth.address,
   endorseees: [] as { name: string; address: string }[],
   name: '',
   description: '',
@@ -75,7 +80,7 @@ const eventDuration = computed(() => {
 
 function addEndorsee(endorsee: { name: string; address: string }) {
   event.value.endorseees.push(endorsee);
- // event.value.endorseees = [...event.value.endorseees, endorsee];
+  // event.value.endorseees = [...event.value.endorseees, endorsee];
 }
 
 function calculateEventDuration() { }
@@ -83,12 +88,16 @@ function calculateEventDuration() { }
 function createEvent() {
   const hashedPassword = CryptoJS.SHA256(event.value.password).toString();
   event.value.password = hashedPassword;
-  console.log('Creating Event:', event.value);
+
+  const { endorseees, name, description, startDate, endDate, password } = event.value;
+  contractsApi.createEvent(name, description, endorseees, startDate, endDate, password);
+
+  //todo if not 200 show error
+
+  //if 200 redirect
+  router.push({ name: 'Home' });
 }
 
-function togglePasswordVisibility() {
-  showPassword.value = !showPassword.value;
-}
 </script>
 
 <style scoped lang="postcss">
@@ -99,5 +108,4 @@ function togglePasswordVisibility() {
   background-color: #f0f8ff;
   border-radius: 8px;
 }
-
 </style>

@@ -9,21 +9,21 @@ const eth = useEthereumStore();
 const isCorrectNetworkSelected = ref<Boolean>(true);
 
 const events = [
-  {
-    id: 1,
-    name: 'ETHDam',
-    description: 'Privacy focused event',
-    startDate: '2024-04-12',
-    endDate: '2024-09-14'
-  },
-  {
-    id: 2,
-    name: 'ETHRome',
-    description: 'Privacy focused event',
-    startDate: '2024-04-12',
-    endDate: '2024-09-14'
-  },
-]
+      {
+        id: "e3271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
+        name: 'ETHDam',
+        description: 'Privacy focused event',
+        startDate: '2024-04-12',
+        endDate: '2024-09-14'
+      },
+      {
+        id: "e4271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
+        name: 'ETHRome',
+        description: 'Privacy focused event',
+        startDate: '2024-04-12',
+        endDate: '2024-09-14'
+      },
+    ]
 
 async function connectAndSwitchNetwork() {
   await eth.connect();
@@ -64,12 +64,18 @@ onMounted(async () => {
 
     <div class="events-container">
       <ul class="event-list">
-        <li v-for="event in events" :key="event.id" class="event-item">
+        <router-link
+          v-for="event in events"
+          :key="event.id"
+          :to="'/events/' + event.id"
+          class="event-item"
+          tag="li"
+        >
           <h2 class="event-name">{{ event.name }}</h2>
           <p class="event-description">{{ event.description }}</p>
           <p class="event-date">Start Date: {{ event.startDate }}</p>
           <p class="event-date">End Date: {{ event.endDate }}</p>
-        </li>
+        </router-link>
       </ul>
     </div>
   </section>
@@ -109,12 +115,14 @@ onMounted(async () => {
 }
 
 .event-item {
-  border: 1px solid #ccc;
-  /* Light gray border */
+  display: block;
+  border: 1px solid #ccc; /* Light gray border */
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
   background-color: white;
+  text-decoration: none; /* Remove default link underline */
+  color: inherit; /* Inherit text color from parent */
 }
 
 .event-name {

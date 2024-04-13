@@ -26,12 +26,18 @@ const events = [
     ]
 
 async function connectAndSwitchNetwork() {
-  await eth.connect();
-  isCorrectNetworkSelected.value = await eth.checkIsCorrectNetwork();
-  if (!isCorrectNetworkSelected.value) {
-    await switchNetwork();
+  try {
+    await eth.connect();
+    isCorrectNetworkSelected.value = await eth.checkIsCorrectNetwork();
+    if (!isCorrectNetworkSelected.value) {
+      await switchNetwork();
+    }
+    isCorrectNetworkSelected.value = await eth.checkIsCorrectNetwork();
+  } catch (error) {
+    console.error('Failed to connect or switch network:', error);
+    // Replace this with code to show a popup to the user
+    alert("Oops, something went wrong. Please refresh the page and try again.");
   }
-  isCorrectNetworkSelected.value = await eth.checkIsCorrectNetwork();
 }
 
 async function switchNetwork() {

@@ -6,89 +6,52 @@
       <div class="form-group">
         <label for="Endorseees">Endorsees:</label>
         <div class="flex items-center mb-2">
-          <input
-            type="text"
-            id="Endorseees"
-            v-model="newEndorsee"
-            class="input-field w-full"
-            placeholder="Enter addresses of endorsees"
-          />
-          <button
-            type="button"
+          <input type="text" id="Endorseees" v-model="newEndorsee" class="input-field w-full"
+            placeholder="Enter addresses of endorsees" />
+          <button type="button"
             class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-            @click="addEndorsee"
-          >
+            @click="addEndorsee">
             Add
           </button>
         </div>
         <div v-if="event.Endorseees.length > 0" class="whitelisted-addresses">
-          <div
-            v-for="(address, index) in event.Endorseees"
-            :key="index"
-            class="address-item"
-          >
+          <div v-for="(address, index) in event.Endorseees" :key="index" class="address-item">
             {{ address }}
           </div>
         </div>
       </div>
       <div class="form-group">
         <label for="eventName">Event Name:</label>
-        <input
-          type="text"
-          id="eventName"
-          v-model="event.name"
-          required
-          class="input-field"
-        />
+        <input type="text" id="eventName" v-model="event.name" required class="input-field" />
       </div>
       <div class="form-group">
         <label for="eventDescription">Description:</label>
-        <textarea
-          id="eventDescription"
-          v-model="event.description"
-          class="textarea-field"
-        ></textarea>
+        <textarea id="eventDescription" v-model="event.description" class="textarea-field"></textarea>
       </div>
       <div class="form-group">
         <label for="startDate">Start Date:</label>
-        <input
-          type="date"
-          id="startDate"
-          v-model="event.startDate"
-          required
-          class="input-field"
-          @change="calculateEventDuration"
-        />
+        <input type="date" id="startDate" v-model="event.startDate" required class="input-field"
+          @change="calculateEventDuration" />
       </div>
       <div class="form-group">
         <label for="endDate">End Date:</label>
-        <input
-          type="date"
-          id="endDate"
-          v-model="event.endDate"
-          required
-          class="input-field"
-          @change="calculateEventDuration"
-        />
+        <input type="date" id="endDate" v-model="event.endDate" required class="input-field"
+          @change="calculateEventDuration" />
       </div>
       <div class="form-group">
         <label for="eventDuration">Event Duration:</label>
-        <input
-          type="text"
-          id="eventDuration"
-          v-model="eventDuration"
-          disabled
-          class="input-field"
-        />
+        <input type="text" id="eventDuration" v-model="eventDuration" disabled class="input-field" />
+      </div>
+      <div class="form-group">
+        <label for="eventPassword">Password:</label>
+        <input type="password" id="eventPassword" v-model="event.password" required class="input-field" />
       </div>
       <button type="submit" class="submit-btn">Create Event</button>
     </form>
     <div class="flex justify-center mb-6">
       <RouterLink to="/">
-        <AppButton
-          variant="secondary"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded relative top-2 transition duration-300 ease-in-out hover:transform hover:-translate-y-1"
-        >
+        <AppButton variant="secondary"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded relative top-2 transition duration-300 ease-in-out hover:transform hover:-translate-y-1">
           Return
         </AppButton>
       </RouterLink>
@@ -99,6 +62,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useEthereumStore } from '@/stores/ethereum';
+import CryptoJS from 'crypto-js';
 
 const eth = useEthereumStore();
 
@@ -108,7 +72,8 @@ const event = ref({
   name: '',
   description: '',
   startDate: '',
-  endDate: ''
+  endDate: '',
+  password: ''
 });
 
 const newEndorsee = ref('');
@@ -136,7 +101,9 @@ function calculateEventDuration() {
 }
 
 function createEvent() {
-  // Implement smart contract logic to create an event here
+  const hashedPassword = CryptoJS.SHA256(event.value.password).toString();
+  event.value.password = hashedPassword;
+
   console.log('Creating Event:', event.value);
   // Optionally interact with a smart contract using ABI and contract address
 }
@@ -147,7 +114,8 @@ function createEvent() {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f0f8ff; /* Light blue background */
+  background-color: #f0f8ff;
+  /* Light blue background */
   border-radius: 8px;
 }
 
@@ -169,7 +137,8 @@ function createEvent() {
   display: block;
   width: 100%;
   padding: 10px 20px;
-  background-color: #007bff; /* Bright blue button */
+  background-color: #007bff;
+  /* Bright blue button */
   color: white;
   border: none;
   border-radius: 4px;

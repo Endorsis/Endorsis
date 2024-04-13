@@ -22,7 +22,10 @@
     </form>
     <div class="flex justify-center mb-6">
       <RouterLink to="/">
-        <AppButton variant="secondary" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+        <AppButton
+          variant="secondary"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded relative top-2 transition duration-300 ease-in-out hover:transform hover:-translate-y-1"
+        >
           Return
         </AppButton>
       </RouterLink>

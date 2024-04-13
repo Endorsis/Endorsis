@@ -101,9 +101,7 @@ function togglePasswordVisibility() {
 
 <style scoped lang="postcss">
 .create-event {
-  max-width:
-
-    600px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f0f8ff;
@@ -130,17 +128,6 @@ function togglePasswordVisibility() {
   border: 1px solid #ccc;
   border-radius: 8px;
 }
-
-.submit-btn {
-  display: block;
-  width: 100%;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-
 
 .password-input {
   width: calc(100% - 50px);

@@ -3,14 +3,14 @@ import { onMounted, ref } from 'vue';
 
 import { Network, useEthereumStore } from '../stores/ethereum';
 import AppButton from '@/components/AppButton.vue';
-import Event, { type EventData } from "@/components/Event.vue";
+import Event, { type EvenModel } from "@/components/Event.vue";
 
 
 const eth = useEthereumStore();
 
 const isCorrectNetworkSelected = ref<Boolean>(true);
 
-const events: EventData[] = [
+const events: EvenModel[] = [
   {
     id: "e3271995afcc2236e8c4a73067c1333db26a01f8596de5eecb3e423505398bad",
     name: 'ETHDam',

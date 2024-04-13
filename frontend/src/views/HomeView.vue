@@ -111,7 +111,7 @@ onMounted(async () => {
 <template>
   <section class="pt-5" v-if="isCorrectNetworkSelected">
     <div v-if="canCreateEvent" class="flex justify-center mb-6">
-      <RouterLink to="events">
+      <RouterLink to="new_event">
         <AppButton variant="secondary">&plus;&nbsp;&nbsp;Create a new event</AppButton>
       </RouterLink>
     </div>

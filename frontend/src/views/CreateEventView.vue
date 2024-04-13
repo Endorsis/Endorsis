@@ -3,12 +3,7 @@
     <h1 class="text-black text-center text-3xl mb-4">Create a New Event</h1>
     <form @submit.prevent="createEvent" class="event-form">
       <AddEndorsee @add="addEndorsee" />
-      <div v-if="event.endorseees.length > 0" class="endorsee-list">
-        <div v-for="(endorsee, index) in event.endorseees" :key="index" class="endorsee-item">
-          <span class="endorsee-name">{{ endorsee.name }}</span>
-          <span class="endorsee-address">{{ endorsee.address }}</span>
-        </div>
-      </div>
+      <EndorseeList :endorsees="event.endorseees" />
       <div class="form-group">
         <label for="eventName">Event Name:</label>
         <input type="text" id="eventName" v-model="event.name" required class="input-field" />
@@ -59,7 +54,9 @@
 import { ref, computed } from 'vue';
 import { useEthereumStore } from '@/stores/ethereum';
 import AddEndorsee from '../components/AddEndorsee.vue';
+import EndorseeList from '@/components/EndorseeList.vue';
 import CryptoJS from 'crypto-js';
+import { EventModel } from "@/models/EventModel";
 
 const eth = useEthereumStore();
 const showPassword = ref(false);
@@ -87,9 +84,10 @@ const eventDuration = computed(() => {
 
 function addEndorsee(endorsee: { name: string; address: string }) {
   event.value.endorseees.push(endorsee);
+ // event.value.endorseees = [...event.value.endorseees, endorsee];
 }
 
-function calculateEventDuration() {}
+function calculateEventDuration() { }
 
 function createEvent() {
   const hashedPassword = CryptoJS.SHA256(event.value.password).toString();
@@ -106,7 +104,7 @@ function togglePasswordVisibility() {
 .create-event {
   max-width:
 
- 600px;
+    600px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f0f8ff;
@@ -126,7 +124,7 @@ function togglePasswordVisibility() {
 
 .input-field,
 .textarea-field {
-  display:block;
+  display: block;
   width: 100%;
   padding: 12px;
   font-size: 1rem;
@@ -144,35 +142,9 @@ function togglePasswordVisibility() {
   border-radius: 4px;
 }
 
-.endorsee-list {
-  margin-top: 20px;
-}
-
-.endorsee-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.endorsee-name {
-  font-weight: bold;
-  color: #333;
-}
-
-.endorsee-address {
-  font-family: monospace;
-  font-weight: bold;
-  color: #555;
-}
 
 .password-input {
-  width: calc(100% - 50px); /* Adjust width to fit toggle button */
+  width: calc(100% - 50px);
 }
 
 .password-toggle {

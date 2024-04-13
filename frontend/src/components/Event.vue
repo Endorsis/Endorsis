@@ -8,15 +8,8 @@
 </template>
 
 <script setup lang="ts">
+import type { EventData } from '@/assets/EventData';
 import { defineProps } from 'vue';
-
-export interface EventData {
-  id: string;
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-}
 
 const props = defineProps<{
   event: EventData;

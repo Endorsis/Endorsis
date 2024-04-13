@@ -1,6 +1,6 @@
 <template>
-  <RouterLink :to="{ name: 'poll', params: { id: pollId } }">
-    <div class="poll p-6 mb-6 rounded-xl border-2 border-gray-300">
+  <RouterLink :to="{ name: 'event', params: { id: eventId } }">
+    <div class="event p-6 mb-6 rounded-xl border-2 border-gray-300">
       <div class="flex items-center justify-between mb-2">
         <h2 class="text-lg lg:text-lg mb-1">{{ name }}</h2>
         <div class="flex items-center">
@@ -40,7 +40,7 @@ import AppButton from '@/components/AppButton.vue';
 import CheckIcon from '@/components/CheckIcon.vue';
 
 defineProps<{
-  pollId?: string;
+  eventId?: string;
   creatorAddress: string;
   name: string;
   description: string;
@@ -51,7 +51,7 @@ defineProps<{
 </script>
 
 <style scoped lang="postcss">
-.poll {
+.event {
   @apply bg-white rounded-xl border-primary;
   border-width: 3px;
   border-style: solid;

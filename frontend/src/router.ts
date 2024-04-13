@@ -15,15 +15,15 @@ const router = createRouter({
       component: () => import('./views/404View.vue'),
     },
     {
-      path: '/polls/:id([0-9a-fA-F]{64,64})',
-      component: () => import('./views/PollView.vue'),
+      path: '/events/:id([0-9a-fA-F]{64,64})',
+      component: () => import('./views/EventView.vue'),
       props: true,
-      name: 'poll',
+      name: 'event',
     },
     {
-      path: '/polls',
-      component: () => import('./views/CreatePollView.vue'),
-      name: 'createPoll',
+      path: '/events',
+      component: () => import('./views/CreateEventView.vue'),
+      name: 'createEvent',
     },
   ],
 });

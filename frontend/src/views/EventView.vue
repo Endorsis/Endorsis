@@ -3,23 +3,7 @@
     <h1 class="text-black text-center text-3xl mb-4">{{ isOngoing ? 'Event Details' : 'Event Completed' }}</h1>
     <Event :event="event" />
 
-
-    <!-- Ongoing Event View -->
-    <div v-if="isOngoing">
-    <h2 class="text-black text-left text-xl pt-4 mb-2">Select Participant</h2>
-    <EndorseesList :endorsees="getEndorsees()" :onSelect="selectEndorsee" :isSelectable="true" :selectedEndorsee="selectedEndorsee" />
-    </div>
-    <!-- Completed Event View -->
-    <div v-else>
-      <div>
-        <h2>Event is completed</h2>
-        <div v-if="isUserEndorsee">
-          <button type="submit" class="submit-btn">Claim Feedback</button>
-        </div>
-      </div>
-    </div>
-
-
+    <EventOngoing v-if="isOngoing" :getEndorsees="getEndorsees" />
 
     <div class="flex justify-center mb-6">
       <RouterLink to="/">
@@ -35,13 +19,13 @@
 <script setup lang="ts">
 import { ref, defineProps, type PropType, computed } from 'vue';
 import Event from '@/components/Event.vue';
-import EndorseesList from "@/components/EndorseesList.vue";
+import EventOngoing from '@/components/EventOngoing.vue';
 import type { EventModel } from '@/models/EventModel'; // Import as a type
 import { EndorseeModel } from '@/models/EndorseeModel'; // Import as a value
 import { useEthereumStore } from '@/stores/ethereum';
 
 const selectedEndorsee = ref<EndorseeModel | null>(null);
-  const selectEndorsee = (endorsee: EndorseeModel) => {
+const selectEndorsee = (endorsee: EndorseeModel) => {
   selectedEndorsee.value = endorsee;
 };
 

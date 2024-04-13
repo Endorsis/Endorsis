@@ -2,12 +2,11 @@
   <div class="create-event">
     <h1 class="text-black text-center text-3xl mb-4">Create a New Event</h1>
     <form @submit.prevent="createEvent" class="event-form">
-
       <AddEndorsee @add="addEndorsee" />
-      <div v-if="event.endorseees.length > 0" class="whitelisted-addresses">
-        <div v-for="(endorsee, index) in event.endorseees" :key="index" class="address-item">
-          <span>{{ endorsee.name + ' ' }}</span>
-          <span>{{ endorsee.address.substring(0, 4) + '...' + endorsee.address.slice(-2) }}</span>
+      <div v-if="event.endorseees.length > 0" class="endorsee-list">
+        <div v-for="(endorsee, index) in event.endorseees" :key="index" class="endorsee-item">
+          <span class="endorsee-name">{{ endorsee.name }}</span>
+          <span class="endorsee-address">{{ endorsee.address }}</span>
         </div>
       </div>
       <div class="form-group">
@@ -36,9 +35,9 @@
         <label for="eventPassword">Password:</label>
         <div class="input-group relative">
           <input :type="showPassword ? 'text' : 'password'" id="eventPassword" v-model="event.password" required
-            class="input-field" />
-          <button type="button" @click="showPassword = !showPassword"
-            class="absolute inset-y-0 right-0 pr-3 flex items-center">
+            class="input-field password-input" />
+          <button type="button" @click="togglePasswordVisibility"
+            class="password-toggle">
             {{ showPassword ? 'Hide' : 'Show' }}
           </button>
         </div>
@@ -90,22 +89,24 @@ function addEndorsee(endorsee: { name: string; address: string }) {
   event.value.endorseees.push(endorsee);
 }
 
-function calculateEventDuration() {
-  // This function is called when the start or end date is changed
-  // It updates the eventDuration computed property
-}
+function calculateEventDuration() {}
 
 function createEvent() {
   const hashedPassword = CryptoJS.SHA256(event.value.password).toString();
   event.value.password = hashedPassword;
-
   console.log('Creating Event:', event.value);
+}
+
+function togglePasswordVisibility() {
+  showPassword.value = !showPassword.value;
 }
 </script>
 
 <style scoped lang="postcss">
 .create-event {
-  max-width: 600px;
+  max-width:
+
+ 600px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f0f8ff;
@@ -125,7 +126,7 @@ function createEvent() {
 
 .input-field,
 .textarea-field {
-  display: block;
+  display:block;
   width: 100%;
   padding: 12px;
   font-size: 1rem;
@@ -143,18 +144,39 @@ function createEvent() {
   border-radius: 4px;
 }
 
-.whitelisted-addresses {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px;
-  margin-top: 2px;
+.endorsee-list {
+  margin-top: 10px;
 }
 
-.address-item {
-  background-color: #f0f0f0;
-  color: #333;
+.endorsee-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 10px;
+  background-color: #e3e3e3;
+  border-radius: 5px;
+}
+
+.endorsee-name {
   font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 4px;
+}
+
+.endorsee-address {
+  font-family: monospace; /* Ensures address is easily readable */
+}
+
+.password-input {
+  width: calc(100% - 50px); /* Adjust width to fit toggle button */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
 }
 </style>

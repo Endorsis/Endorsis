@@ -6,17 +6,20 @@
       <div class="form-group">
         <label for="Endorseees">Endorsees:</label>
         <div class="flex items-center mb-2">
-          <input type="text" id="Endorseees" v-model="newEndorsee" class="input-field w-full"
-            placeholder="Enter addresses of endorsees" />
+          <input type="text" id="EndorseeName" v-model="newEndorseeName" class="input-field w-half mr-2"
+            placeholder="Enter name of endorsee" />
+          <input type="text" id="EndorseeAddress" v-model="newEndorseeAddress" class="input-field w-half"
+            placeholder="Enter address of endorsee" />
           <button type="button"
             class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
             @click="addEndorsee">
-            Add
+            +
           </button>
         </div>
-        <div v-if="event.Endorseees.length > 0" class="whitelisted-addresses">
-          <div v-for="(address, index) in event.Endorseees" :key="index" class="address-item">
-            {{ address }}
+        <div v-if="event.endorseees.length > 0" class="whitelisted-addresses">
+          <div v-for="(endorsee, index) in event.endorseees" :key="index" class="address-item">
+            <span>{{ endorsee.name }}</span>
+            <span>{{ endorsee.address }}</span>
           </div>
         </div>
       </div>
@@ -74,9 +77,12 @@ import CryptoJS from 'crypto-js';
 const eth = useEthereumStore();
 const showPassword = ref(false);
 
+const newEndorseeName = ref('');
+const newEndorseeAddress = ref('');
+
 const event = ref({
   creatorAddress: eth.address,
-  Endorseees: [] as string[],
+  endorseees: [] as { name: string; address: string }[],
   name: '',
   description: '',
   startDate: '',
@@ -84,7 +90,6 @@ const event = ref({
   password: ''
 });
 
-const newEndorsee = ref('');
 const eventDuration = computed(() => {
   if (event.value.startDate && event.value.endDate) {
     const start = new Date(event.value.startDate);
@@ -97,9 +102,10 @@ const eventDuration = computed(() => {
 });
 
 function addEndorsee() {
-  if (newEndorsee.value.trim()) {
-    event.value.Endorseees.push(newEndorsee.value.trim());
-    newEndorsee.value = '';
+  if (newEndorseeName.value.trim() && newEndorseeAddress.value.trim()) {
+    event.value.endorseees.push({ name: newEndorseeName.value.trim(), address: newEndorseeAddress.value.trim() });
+    newEndorseeName.value = '';
+    newEndorseeAddress.value = '';
   }
 }
 
@@ -136,7 +142,8 @@ function createEvent() {
   color: #333;
 }
 
-.input-field, .textarea-field {
+.input-field,
+.textarea-field {
   display: block;
   width: 100%;
   padding: 12px;
@@ -168,6 +175,4 @@ function createEvent() {
   font-weight: bold;
   padding: 4px 8px;
   border-radius: 4px;
-}
-
-</style>
+}</style>

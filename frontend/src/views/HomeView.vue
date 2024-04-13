@@ -60,12 +60,12 @@ onMounted(async () => {
           <span class="ml-2">Create a new event</span>
         </AppButton>
       </RouterLink>
-      <RouterLink to="join_event">
+      <!-- <RouterLink to="join_event">
         <AppButton variant="secondary">
           <span class="text-xl font-bold">&plus;</span>
           <span class="ml-2">Join existing event</span>
         </AppButton>
-      </RouterLink>
+      </RouterLink> -->
     </div>
 
     <h1 class="capitalize text-2xl text-white font-bold mb-4">Events</h1>

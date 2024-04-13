@@ -19,28 +19,22 @@ const router = createRouter({
       component: LoginView,
     },
     {
-      path: '/:path(.*)',
-      component: () => import('./views/404View.vue'),
-    },
-    {
       path: '/events/:id([0-9a-fA-F]{64,64})',
       component: () => import('./views/EventView.vue'),
       props: true,
       name: 'event',
       meta: { requiresAuth: true },
     },
-    // {
-    //   path: '/join_event',
-    //   component: () => import('./views/JoinEventView.vue'),
-    //   name: 'joinEvent',
-    //   meta: { requiresAuth: true },
-    // },
     {
       path: '/new_event',
       component: () => import('./views/CreateEventView.vue'),
       name: 'createEvent',
       meta: { requiresAuth: true },
     },
+    {
+      path: '/:path(.*)',
+      component: () => import('./views/404View.vue'),
+    }
   ],
 });
 

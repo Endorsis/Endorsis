@@ -1,8 +1,7 @@
 <template>
   <div class="view-event">
     <h1 class="text-black text-center text-3xl mb-4">{{ isOngoing ? 'Event Details' : 'Event Completed' }}</h1>
-    <Event :event="event" />
-
+    <Event v-if="event" :event="event" />
     <EventOngoing v-if="isOngoing" :getEndorsees="getEndorsees" />
     <EventCompleted v-else :isUserEndorsee="isUserEndorsee" />
 
@@ -18,68 +17,72 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, type PropType, computed } from 'vue';
+import { ref, defineProps, type PropType, computed, onMounted } from 'vue';
 import Event from '@/components/Event.vue';
 import EventOngoing from '@/components/EventOngoing.vue';
 import EventCompleted from '@/components/EventCompleted.vue'; // Import EventCompleted
 import type { EventModel } from '@/models/EventModel'; // Import as a type
-import { EndorseeModel } from '@/models/EndorseeModel'; // Import as a value
 import { useEthereumStore } from '@/stores/ethereum';
 import ContractsApi from '@/api/ContractsApi';
+import type { EndorseeModel } from '@/models/EndorseeModel';
+
+const contractsApi = new ContractsApi();
+
+// Define props to get the event ID
+const props = defineProps({
+  eventId: {
+    type: String,
+    required: true
+  }
+});
+
+// Initialize event as null
+const event = ref<EventModel | null>(null);
+
+onMounted(async () => {
+  console.log('EventView mounted');
+  // Fetch the event data when the component is mounted
+  const item = await contractsApi.getEventsById(props.eventId);
+  if (item) {
+    event.value = item;
+  } else {
+    throw new Error("Event is null");
+  }
+});
+
 
 const selectedEndorsee = ref<EndorseeModel | null>(null);
 const selectEndorsee = (endorsee: EndorseeModel) => {
   selectedEndorsee.value = endorsee;
 };
 
-const props = defineProps({
-  event: {
-    type: Object as PropType<EventModel>, // Specify the type of the prop
-    default: () => ({
-      name: 'ETHDam',
-      description: 'Privacy focused event',
-      startDate: '2024-04-12',
-      endDate: '2024-09-14',
-      //this is not working, haha
-      endorseees: [
-        new EndorseeModel('Endorsee 1', '0x3Dd03d7d6c3137f1Eb7582BaFfE2f4Ef3dE1F730'),
-        new EndorseeModel('Endorsee 2', '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'),
-        new EndorseeModel('me', '0xEBC738Fb142dC0b56fC946E8Ec3076c25E63a650')
-      ],
-    })
-  }
-});
-
-// I don't know why this is not working, but I cannot take it anymore
-// const getEndorsees = () => event.value.endorseees;
-const getEndorsees = () => [
-  new EndorseeModel('Endorsee 1', '0x3Dd03d7d6c3137f1Eb7582BaFfE2f4Ef3dE1F730'),
-  new EndorseeModel('Endorsee 2', '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'),
-  new EndorseeModel('me', '0xEBC738Fb142dC0b56fC946E8Ec3076c25E63a650')
-];
+const getEndorsees = () => event.value ? event.value.endorseees : [];
 
 // Computed property to check if the event is ongoing
 const isOngoing = computed(() => {
-  const currentDate = new Date();
-  const startDate = new Date(event.value.startDate);
-  const endDate = new Date(event.value.endDate);
+  if (event.value) {
+    const currentDate = new Date();
+    const startDate = new Date(event.value.startDate);
+    const endDate = new Date(event.value.endDate);
 
-  return startDate <= currentDate && currentDate <= endDate;
-  // return false;
+    return startDate <= currentDate && currentDate <= endDate;
+  }
+  return false;
 });
 
 const isUserEndorsee = computed(() => {
-  const eth = useEthereumStore();
-  const address = eth.address;
-  console.log(`User address: ${address}`);
-  return event.value.endorseees.some(endorsee => {
-    return endorsee.address.toLowerCase() === address?.toLowerCase();
-  });
+  if (event.value) {
+    const eth = useEthereumStore();
+    const address = eth.address;
+    console.log(`User address: ${address}`);
+    return event.value.endorseees.some(endorsee => {
+      return endorsee.address.toLowerCase() === address?.toLowerCase();
+    });
+  }
+  return false;
+
 });
 
-
-// Using ref to make it reactive
-const event = ref(props.event);
 </script>
 
 <style scoped>

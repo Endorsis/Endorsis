@@ -53,8 +53,9 @@ async function connectAndSwitchNetwork() {
   isCorrectNetworkSelected.value = await eth.checkIsCorrectNetwork();
 }
 
+const router = useRouter();
+
 onMounted(async () => {
-  const router = useRouter();
   await connectAndSwitchNetwork();
   await fetchAndSetMessageValues();
 

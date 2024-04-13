@@ -22,6 +22,7 @@ const isSettingMessage = ref(false);
 const isCorrectNetworkSelected = ref<Boolean>(true);
 
 const canCreateEvent = ref<Boolean>(true);
+const canJoinEvent = ref<Boolean>(true);
 
 interface Message {
   message: string;
@@ -112,7 +113,10 @@ onMounted(async () => {
   <section class="pt-5" v-if="isCorrectNetworkSelected">
     <div v-if="canCreateEvent" class="flex justify-center mb-6">
       <RouterLink to="new_event">
-        <AppButton variant="secondary">&plus;&nbsp;&nbsp;Create a new event</AppButton>
+        <AppButton class="mr-2" variant="secondary">&plus;&nbsp;&nbsp;Create a new event</AppButton>
+      </RouterLink>
+      <RouterLink to="join_event">
+        <AppButton variant="secondary">&plus;&nbsp;&nbsp;Join existing event</AppButton>
       </RouterLink>
     </div>
 

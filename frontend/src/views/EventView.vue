@@ -18,12 +18,12 @@
 import { ref, defineProps, type PropType } from 'vue';
 import Event from '@/components/Event.vue';
 import EndorseeList from '@/components/EndorseeList.vue';
-import type { EventData } from '@/assets/EventData';
+import type { EvenModel } from '@/assets/EvenModel';
 
 // Defining the expected props structure with default values
 const props = defineProps({
   event: {
-    type: Object as PropType<EventData>, // Specify the type of the prop
+    type: Object as PropType<EvenModel>, // Specify the type of the prop
     default: () => ({
       name: 'ETHDam',
       description: 'Privacy focused event',

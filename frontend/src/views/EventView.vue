@@ -23,19 +23,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
 
-// Assume event details are fetched or passed in some way
-const event = ref({
-  name: 'ETHDam',
-  description: 'Privacy focused event',
-  startDate: '2024-04-12',
-  endDate: '2024-09-14'
+// Defining the expected props structure with default values
+const props = defineProps({
+  event: {
+    type: Object,
+    default: () => ({
+      name: 'ETHDam',
+      description: 'Privacy focused event',
+      startDate: '2024-04-12',
+      endDate: '2024-09-14'
+    })
+  }
 });
 
+// Using ref to make it reactive
+const event = ref(props.event);
 </script>
 
-<style scoped lang="postcss">
+<style scoped>
 .view-event {
   max-width: 600px;
   margin: 0 auto;

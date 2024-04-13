@@ -47,4 +47,5 @@ export default class ContractsApi {
 
     console.log(`events: ${ContractsApi.events}`);
   }
+
 }

@@ -2,26 +2,18 @@
   <div class="create-event">
     <h1 class="text-black text-center text-3xl mb-4">Create a New Event</h1>
     <form @submit.prevent="createEvent" class="event-form">
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="creatorAddress">Creator Address:</label>
         <div class="flex items-center">
           <input
-            type="text"
             id="creatorAddress"
             v-model="event.creatorAddress"
             required
             class="input-field w-full"
-            placeholder="Enter creator address or ENS domain"
+            hidden="true"
           />
-          <button
-            type="button"
-            class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-            @click="getConnectedAddress"
-          >
-            Query Address
-          </button>
         </div>
-      </div>
+      </div> -->
       <div class="form-group">
         <label for="whitelistedAddresses">Whitelisted Addresses:</label>
         <div class="flex items-center mb-2">
@@ -122,7 +114,7 @@ import { useEthereumStore } from '@/stores/ethereum';
 const eth = useEthereumStore();
 
 const event = ref({
-  creatorAddress: '',
+  creatorAddress: eth.address,
   whitelistedAddresses: [] as string[],
   name: '',
   description: '',
@@ -141,11 +133,6 @@ const eventDuration = computed(() => {
   }
   return '';
 });
-
-async function getConnectedAddress() {
-  const connectedAddress = await eth.getConnectedAddress();
-  event.value.creatorAddress = connectedAddress;
-}
 
 function addWhitelistedAddress() {
   if (newWhitelistedAddress.value.trim()) {

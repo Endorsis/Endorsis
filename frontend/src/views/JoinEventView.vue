@@ -48,6 +48,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import CryptoJS from 'crypto-js';
 
 const events = [
   {
@@ -79,6 +80,9 @@ const password = ref('');
 function joinEventWithPassword() {
   console.log('contract address:', contractAddress);
   console.log('Password:', password);
+  const hashedPassword = CryptoJS.SHA256(contractAddress).toString();
+
+  console.log("hashed password:", hashedPassword);
 }
 </script>
 

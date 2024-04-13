@@ -2,39 +2,28 @@
   <div class="create-event">
     <h1 class="text-black text-center text-3xl mb-4">Create a New Event</h1>
     <form @submit.prevent="createEvent" class="event-form">
-      <!-- <div class="form-group">
-        <label for="creatorAddress">Creator Address:</label>
-        <div class="flex items-center">
-          <input
-            id="creatorAddress"
-            v-model="event.creatorAddress"
-            required
-            class="input-field w-full"
-            hidden="true"
-          />
-        </div>
-      </div> -->
+
       <div class="form-group">
-        <label for="whitelistedAddresses">Whitelisted Addresses:</label>
+        <label for="Endorseees">Endorsees:</label>
         <div class="flex items-center mb-2">
           <input
             type="text"
-            id="whitelistedAddresses"
-            v-model="newWhitelistedAddress"
+            id="Endorseees"
+            v-model="newEndorsee"
             class="input-field w-full"
-            placeholder="Enter whitelisted address"
+            placeholder="Enter addresses of endorsees"
           />
           <button
             type="button"
             class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-            @click="addWhitelistedAddress"
+            @click="addEndorsee"
           >
             Add
           </button>
         </div>
-        <div v-if="event.whitelistedAddresses.length > 0" class="whitelisted-addresses">
+        <div v-if="event.Endorseees.length > 0" class="whitelisted-addresses">
           <div
-            v-for="(address, index) in event.whitelistedAddresses"
+            v-for="(address, index) in event.Endorseees"
             :key="index"
             class="address-item"
           >
@@ -115,14 +104,14 @@ const eth = useEthereumStore();
 
 const event = ref({
   creatorAddress: eth.address,
-  whitelistedAddresses: [] as string[],
+  Endorseees: [] as string[],
   name: '',
   description: '',
   startDate: '',
   endDate: ''
 });
 
-const newWhitelistedAddress = ref('');
+const newEndorsee = ref('');
 const eventDuration = computed(() => {
   if (event.value.startDate && event.value.endDate) {
     const start = new Date(event.value.startDate);
@@ -134,10 +123,10 @@ const eventDuration = computed(() => {
   return '';
 });
 
-function addWhitelistedAddress() {
-  if (newWhitelistedAddress.value.trim()) {
-    event.value.whitelistedAddresses.push(newWhitelistedAddress.value.trim());
-    newWhitelistedAddress.value = '';
+function addEndorsee() {
+  if (newEndorsee.value.trim()) {
+    event.value.Endorseees.push(newEndorsee.value.trim());
+    newEndorsee.value = '';
   }
 }
 

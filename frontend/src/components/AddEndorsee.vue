@@ -1,13 +1,25 @@
 <template>
   <div>
     <div class="flex items-center mb-2">
-      <input type="text" id="EndorseeName" v-model="newEndorseeName" class="input-field w-half mr-2"
-        placeholder="Enter name of endorsee" />
-      <input type="text" id="EndorseeAddress" v-model="newEndorseeAddress" class="input-field w-half"
-        placeholder="Enter address of endorsee" />
-      <button type="button"
-        class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-        @click="addEndorsee">
+      <input
+        type="text"
+        id="EndorseeName"
+        v-model="newEndorseeName"
+        class="input-field w-half mr-2"
+        placeholder="Enter name of endorsee"
+      />
+      <input
+        type="text"
+        id="EndorseeAddress"
+        v-model="newEndorseeAddress"
+        class="input-field w-half"
+        placeholder="Enter ETH address or ENS domain"
+      />
+      <button
+        type="button"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        @click="addEndorsee"
+      >
         Add
       </button>
     </div>
@@ -21,7 +33,6 @@
 import { isAddress } from 'ethers';
 import { ref, defineEmits } from 'vue';
 
-
 const newEndorseeName = ref('');
 const newEndorseeAddress = ref('');
 const errorMessage = ref('');
@@ -34,7 +45,7 @@ function addEndorsee() {
   } else if (newEndorseeAddress.value.trim() === '') {
     errorMessage.value = 'Address cannot be empty';
   } else if (!isValidAddress(newEndorseeAddress.value.trim())) {
-    errorMessage.value = 'Invalid address';
+    errorMessage.value = 'Invalid address format';
   } else {
     emit('add', { name: newEndorseeName.value.trim(), address: newEndorseeAddress.value.trim() });
     newEndorseeName.value = '';
@@ -44,69 +55,44 @@ function addEndorsee() {
 }
 
 function isValidAddress(address: string) {
-  return isAddress(address);
+  return isAddress(address) || isValidENS(address);
+}
+
+function isValidENS(address: string) {
+  // ENS domains must end with '.eth' and contain at least one character before the suffix
+  return address.endsWith('.eth') && address.indexOf('.eth') > 0;
 }
 </script>
 
-
 <style scoped lang="postcss">
-.create-event {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f0f8ff;
-  border-radius: 8px;
-}
-
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 1rem;
-  color: #333;
-}
-
-.input-field,
-.textarea-field {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.submit-btn {
-  display: block;
-  width: 100%;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-
-.whitelisted-addresses {
+.flex {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2px;
-  margin-top: 2px;
+  align-items: center;
 }
 
-.address-item {
-  background-color: #f0f0f0;
-  color: #333;
-  font-weight: bold;
-  padding: 4px 8px;
+.input-field {
+  flex-grow: 1;
+  margin-right: 8px;
+  padding: 8px;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 .error-message {
   color: red;
-  padding-bottom: 20px;
-  /* More padding after the error message */
+  margin-top: 8px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
 }
 </style>

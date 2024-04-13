@@ -8,6 +8,8 @@ import AppButton from '@/components/AppButton.vue';
 import MessageLoader from '@/components/MessageLoader.vue';
 import JazzIcon from '@/components/JazzIcon.vue';
 import { retry } from '@/utils/promise';
+import GenerateAIImageButton from '@/components/GenerateAIImage.vue';
+
 
 const eth = useEthereumStore();
 const messageBox = useMessageBox();
@@ -140,6 +142,9 @@ onMounted(async () => {
       <AppButton variant="secondary" @click="switchNetwork">Switch network</AppButton>
     </div>
   </section>
+
+  <GenerateAIImageButton />
+
 </template>
 
 <style scoped lang="postcss">

@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: `/`,
       component: HomeView,
-      meta: { requiresAuth: true },
+      // meta: { requiresAuth: true },
     },
     {
       path: `/login`,

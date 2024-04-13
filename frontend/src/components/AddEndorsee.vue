@@ -1,28 +1,16 @@
 <template>
   <div>
-    <div class="flex items-center mb-2">
-      <input
-        type="text"
-        id="EndorseeName"
-        v-model="newEndorseeName"
-        class="input-field w-half mr-2"
-        placeholder="Enter name of endorsee"
-      />
-      <input
-        type="text"
-        id="EndorseeAddress"
-        v-model="newEndorseeAddress"
-        class="input-field w-half"
-        placeholder="Enter ETH address or ENS domain"
-      />
-      <button
-        type="button"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        @click="addEndorsee"
-      >
-        Add
-      </button>
-    </div>
+    <form @submit.prevent="addEndorsee">
+      <div class="flex items-center mb-2">
+        <input ref="nameInput" type="text" id="EndorseeName" v-model="newEndorseeName" class="input-field w-half mr-2"
+          placeholder="Enter name of endorsee" />
+        <input type="text" id="EndorseeAddress" v-model="newEndorseeAddress" class="input-field w-half"
+          placeholder="Enter ETH address or ENS domain" />
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Add
+        </button>
+      </div>
+    </form>
     <div v-if="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
@@ -31,13 +19,19 @@
 
 <script setup lang="ts">
 import { isAddress } from 'ethers';
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, onMounted, type Ref } from 'vue';
 
 const newEndorseeName = ref('');
 const newEndorseeAddress = ref('');
 const errorMessage = ref('');
 
 const emit = defineEmits(['add']);
+
+const nameInput: Ref<HTMLElement | null> = ref(null);
+
+onMounted(() => {
+  nameInput.value?.focus();
+});
 
 function addEndorsee() {
   if (newEndorseeName.value.trim() === '') {
@@ -51,6 +45,9 @@ function addEndorsee() {
     newEndorseeName.value = '';
     newEndorseeAddress.value = '';
     errorMessage.value = '';
+    if (nameInput.value) {
+      nameInput.value.focus();
+    }
   }
 }
 

@@ -3,12 +3,13 @@
     <div class="events-container">
       <ul class="event-list" style="max-height: 300px; overflow-y: auto;">
         <li v-for="event in events" :key="event.id">
-          <label :for="'event-'+ event.id" class="event-label">
+          <label :for="'event-'+ event.id" :class="{ 'selected': contractAddress === event.id }" class="event-label">
             <input
               type="radio"
               :id="'event-' + event.id"
               :value="event.id"
               v-model="contractAddress"
+              hidden="true"
             />
             <div class="event-info">
               <h3>{{ event.name }}</h3>
@@ -120,21 +121,22 @@ function joinEventWithPassword() {
   border-radius: 4px;
   cursor: pointer;
 }
+
 .event-label {
   display: block;
-  border: 1px solid #ccc; /* Border color */
+  border: 1px solid #ccc;
   border-radius: 4px;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #fff; /* White background */
+  background-color: #fff;
 }
 
 .event-info {
-  margin-left: 30px; /* Indentation for the event info */
+  margin-left: 30px;
 }
 
 .events-container {
-  border: 1px solid #ccc; /* Border color for the container */
+  border: 1px solid #ccc;
   border-radius: 4px;
   padding: 10px;
 }
@@ -144,5 +146,9 @@ function joinEventWithPassword() {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+}
+
+.selected {
+  background-color: lightblue;
 }
 </style>

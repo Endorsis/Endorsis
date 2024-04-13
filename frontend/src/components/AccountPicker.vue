@@ -20,7 +20,10 @@ async function connectWallet() {
     return;
   }
 
-  if (connecting.value) {
+  if (eth.address){
+    window.open('https://explorer.oasis.io/testnet/sapphire/address/' + String(eth.address));
+  }
+  else if (connecting.value) {
     console.log("Connection attempt already in progress...");
     return;
   }

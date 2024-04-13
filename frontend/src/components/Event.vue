@@ -8,11 +8,11 @@
 </template>
 
 <script setup lang="ts">
-import type { EvenModel } from '@/assets/EvenModel';
+import type { EventModel } from '@/models/EventModel';
 import { defineProps } from 'vue';
 
 const props = defineProps<{
-  event: EvenModel;
+  event: EventModel;
 }>();
 </script>
 

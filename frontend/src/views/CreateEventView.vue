@@ -3,7 +3,7 @@
     <h1 class="text-black text-center text-3xl mb-4">Create a New Event</h1>
     <form @submit.prevent="createEvent" class="event-form">
       <AddEndorsee @add="addEndorsee" />
-      <EndorseeList :endorsees="event.endorseees" />
+      <EndorseesList :endorsees="event.endorseees" />
       <div class="form-group">
         <label for="eventName">Event Name:</label>
         <input type="text" id="eventName" v-model="event.name" required class="input-field" />
@@ -26,17 +26,8 @@
         <label for="eventDuration">Event Duration:</label>
         <input type="text" id="eventDuration" v-model="eventDuration" disabled class="input-field" />
       </div>
-      <div class="form-group">
-        <label for="eventPassword">Password:</label>
-        <div class="input-group relative">
-          <input :type="showPassword ? 'text' : 'password'" id="eventPassword" v-model="event.password" required
-            class="input-field password-input" />
-          <button type="button" @click="togglePasswordVisibility"
-            class="password-toggle">
-            {{ showPassword ? 'Hide' : 'Show' }}
-          </button>
-        </div>
-      </div>
+      <PasswordField v-model="event.password" />
+
       <button type="submit" class="submit-btn">Create Event</button>
     </form>
     <div class="flex justify-center mb-6">
@@ -54,9 +45,9 @@
 import { ref, computed } from 'vue';
 import { useEthereumStore } from '@/stores/ethereum';
 import AddEndorsee from '../components/AddEndorsee.vue';
-import EndorseeList from '@/components/EndorseeList.vue';
+import EndorseesList from '@/components/EndorseesList.vue';
+import PasswordField from '../components/PasswordField.vue';
 import CryptoJS from 'crypto-js';
-import { EventModel } from "@/models/EventModel";
 
 const eth = useEthereumStore();
 const showPassword = ref(false);
@@ -102,59 +93,11 @@ function togglePasswordVisibility() {
 
 <style scoped lang="postcss">
 .create-event {
-  max-width:
-
-    600px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f0f8ff;
   border-radius: 8px;
 }
 
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 1rem;
-  color: #333;
-}
-
-.input-field,
-.textarea-field {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.submit-btn {
-  display: block;
-  width: 100%;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-
-
-.password-input {
-  width: calc(100% - 50px);
-}
-
-.password-toggle {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #007bff;
-  cursor: pointer;
-}
 </style>

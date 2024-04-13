@@ -20,6 +20,11 @@
       </div>
       <button type="submit" class="submit-btn">Create Event</button>
     </form>
+    <div class="flex justify-center mb-6">
+      <RouterLink to="/">
+        <AppButton variant="secondary">Return</AppButton>
+      </RouterLink>
+    </div>
   </div>
 </template>
 

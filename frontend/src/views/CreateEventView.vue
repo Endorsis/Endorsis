@@ -44,7 +44,14 @@
       </div>
       <div class="form-group">
         <label for="eventPassword">Password:</label>
-        <input type="password" id="eventPassword" v-model="event.password" required class="input-field" />
+        <div class="input-group relative">
+          <input :type="showPassword ? 'text' : 'password'" id="eventPassword" v-model="event.password" required
+            class="input-field" />
+          <button type="button" @click="showPassword = !showPassword"
+            class="absolute inset-y-0 right-0 pr-3 flex items-center">
+            {{ showPassword.value ? 'Hide' : 'Show' }}
+          </button>
+        </div>
       </div>
       <button type="submit" class="submit-btn">Create Event</button>
     </form>
@@ -65,6 +72,7 @@ import { useEthereumStore } from '@/stores/ethereum';
 import CryptoJS from 'crypto-js';
 
 const eth = useEthereumStore();
+const showPassword = ref(false);
 
 const event = ref({
   creatorAddress: eth.address,
@@ -105,7 +113,6 @@ function createEvent() {
   event.value.password = hashedPassword;
 
   console.log('Creating Event:', event.value);
-  // Optionally interact with a smart contract using ABI and contract address
 }
 </script>
 

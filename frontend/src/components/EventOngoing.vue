@@ -8,8 +8,15 @@
         <label for="feedback">Feedback:</label>
         <textarea id="feedback" v-model="feedback" class="textarea-field"></textarea>
       </div>
-      <PasswordField v-model="password" />
-      <button type="submit" class="submit-btn">Submit Feedback</button>
+      <label for="eventPassword">Password:</label>
+      <div class="input-group relative">
+        <input :type="showPassword ? 'text' : 'password'" id="eventPassword" v-model="password" required
+          class="input-field password-input" />
+        <button type="button" @click="togglePasswordVisibility" class="password-toggle">
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
+      <button type="submit" class="submit-btn" @click="submitFeedback">Submit Feedback</button>
     </div>
   </div>
 </template>
@@ -20,6 +27,11 @@ import EndorseesList from "@/components/EndorseesList.vue";
 import type { EndorseeModel } from '@/models/EndorseeModel';
 import PasswordField from '../components/PasswordField.vue';
 import ContractsApi from "@/api/ContractsApi";
+
+const showPassword = ref(false);
+function togglePasswordVisibility() {
+  showPassword.value = !showPassword.value;
+}
 
 const selectedEndorsee = ref<EndorseeModel | null>(null);
 const selectEndorsee = (endorsee: EndorseeModel) => {
@@ -37,7 +49,15 @@ const feedback = ref('');
 const password = ref('');
 
 const submitFeedback = () => {
-  new ContractsApi().submitFeedback(feedback.value, password.value);
+  const url = window.location.href;
+  const parts = url.split("/");
+  const eventId = parts[parts.length - 1];
+
+  console.log(url.split("/"));
+  console.log(feedback.value);
+  console.log(password.value);
+
+  new ContractsApi().submitFeedback(eventId, feedback.value, password.value);
   //todo display error if not 200
   //todo if 200 display success, clear fiedls
 };

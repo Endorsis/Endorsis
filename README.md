@@ -7,8 +7,8 @@ Contract address:
 https://explorer.oasis.io/testnet/sapphire/address/0xeCcC3f1D9Bed269435F5737B6718Fc0F86d1b0E2
 
 Live Demo:
-https://demo-starter-frontend-git-fronttanguy-cleanerzkps-projects.vercel.app/#/
-
+[https://demo-starter-frontend-git-fronttanguy-cleanerzkps-projects.vercel.app/#/
+](https://demo-starter-frontend-git-fronttanguy-cleanerzkps-projects.vercel.app?_vercel_share=rgVOKh5l9oQynQyGpf5uBb2riCCAXpTx)
 ## Features
 
 ### For Event Organizers

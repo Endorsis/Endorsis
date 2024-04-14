@@ -16,8 +16,32 @@ export default class ContractsApi {
     ContractsApi.events.set(mockEvent2.id, mockEvent2);
   }
 
-  async submitFeedback(eventId: string, feedback: string, password: string) {
+  async submitFeedback(eventId: string, endorsee_address: string, feedback: string, password: string) {
     console.log(`submitFeedback ${eventId}, ${feedback}, ${password}`);
+
+    const event = await this.getEventsById(eventId);
+    const event_password = event?.password
+
+    console.log(event_password);
+    console.log(password);
+    if (true){
+      const endorsee = event?.endorseees.find(e => e.address === endorsee_address);
+
+      console.log(endorsee);
+      if (endorsee) {
+        if (!endorsee.feedback){
+          endorsee.feedback = [];
+        }
+        endorsee.feedback.push(feedback);
+        console.log(`Feedback added for endorsee ${endorsee.name}`);
+      } else {
+        console.log('Endorsee not found.');
+      }
+      console.log(endorsee?.feedback);
+
+    } else {
+      window.alert("Incorrect password. Please try again.");
+    }
   }
 
   async claimFeedback(password: string): Promise<string> {

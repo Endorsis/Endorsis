@@ -72,7 +72,7 @@ function togglePasswordVisibility() {
 }
 
 const event = ref({
-  endorseees: [] as { name: string; address: string }[],
+  endorseees: [] as { name: string; address: string; feedback: string[] }[],
   name: '',
   description: '',
   startDate: '',
@@ -91,7 +91,8 @@ const eventDuration = computed(() => {
   return '';
 });
 
-function addEndorsee(endorsee: { name: string; address: string }) {
+function addEndorsee(endorsee: { name: string; address: string; feedback: [] }) {
+  console.log(endorsee);
   event.value.endorseees.push(endorsee);
   // event.value.endorseees = [...event.value.endorseees, endorsee];
 }

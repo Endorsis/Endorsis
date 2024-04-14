@@ -55,7 +55,10 @@ const submitFeedback = () => {
 
   console.log("endorsse selected", selectedEndorsee.value);
 
-  new ContractsApi().submitFeedback(eventId, selectedEndorsee.value?.address, feedback.value, password.value);
+  const passwordValue = password.value || '';
+  const selectedEndorseeAddress = selectedEndorsee.value?.address || '';
+
+  new ContractsApi().submitFeedback(eventId, selectedEndorseeAddress, feedback.value, passwordValue);
   //todo display error if not 200
   //todo if 200 display success, clear fiedls
 };

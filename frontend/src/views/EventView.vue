@@ -25,6 +25,10 @@ import type { EventModel } from '@/models/EventModel'; // Import as a type
 import { useEthereumStore } from '@/stores/ethereum';
 import ContractsApi from '@/api/ContractsApi';
 import type { EndorseeModel } from '@/models/EndorseeModel';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
 
 const contractsApi = new ContractsApi();
 
@@ -40,13 +44,17 @@ const props = defineProps({
 const event = ref<EventModel | null>(null);
 
 onMounted(async () => {
-  console.log('EventView mounted');
-  // Fetch the event data when the component is mounted
-  const item = await contractsApi.getEventsById(props.eventId);
-  if (item) {
-    event.value = item;
-  } else {
-    throw new Error("Event is null");
+  const eventId = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
+  console.log(`EventView mounted ${eventId}`);
+
+  if (eventId) {
+    // Fetch the event data when the component is mounted
+    const item = await contractsApi.getEventsById(eventId);
+    if (item) {
+      event.value = item;
+    } else {
+      throw new Error("Event is null");
+    }
   }
 });
 

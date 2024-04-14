@@ -34,7 +34,7 @@ const router = createRouter({
     {
       path: '/:path(.*)',
       component: () => import('./views/404View.vue'),
-    }
+    },
   ],
 });
 

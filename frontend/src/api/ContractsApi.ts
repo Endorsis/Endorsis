@@ -52,28 +52,31 @@ export default class ContractsApi {
     console.log(`submitFeedback ${eventId}, ${feedback}, ${password}`);
 
     const event = await this.getEventsById(eventId);
-    const event_password = event?.password
-    const hashedPassword = CryptoJS.SHA256(password).toString();
 
-    if (hashedPassword === event_password){
-      const endorsee = event?.endorseees.find(e => e.address === endorsee_address);
-
-      console.log(endorsee);
-      if (endorsee) {
-        if (!endorsee.feedback){
-          endorsee.feedback = [];
+    if (event){
+      const event_password = event?.password
+      const hashedPassword = CryptoJS.SHA256(password).toString();
+  
+      if (hashedPassword === event_password){
+        const endorsee = event?.endorseees.find(e => e.address === endorsee_address);
+  
+        console.log(endorsee);
+        if (endorsee) {
+          if (!endorsee.feedback){
+            endorsee.feedback = [];
+          }
+          endorsee.feedback.push(feedback);
+          console.log(`Feedback added for endorsee ${endorsee.name}`);
+        } else {
+          console.log('Endorsee not found.');
         }
-        endorsee.feedback.push(feedback);
-        console.log(`Feedback added for endorsee ${endorsee.name}`);
+        console.log(endorsee?.feedback);
+  
       } else {
-        console.log('Endorsee not found.');
+        window.alert("Incorrect password. Please try again.");
       }
-      console.log(endorsee?.feedback);
-
-    } else {
-      window.alert("Incorrect password. Please try again.");
     }
-  }
+    }
 
   async claimFeedback(password: string): Promise<string> {
     console.log(`claimFeedback password: ${password}`);

@@ -19,8 +19,10 @@ export default class ContractsApi {
     console.log(`submitFeedback ${feedback}, ${password}`);
   }
 
-  async claimFeedback(password: string) {
+  async claimFeedback(password: string): Promise<string> {
     console.log(`claimFeedback password: ${password}`);
+
+    return 'You are my honey badger';
   }
 
   async getEvents() {

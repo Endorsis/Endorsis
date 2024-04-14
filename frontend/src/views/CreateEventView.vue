@@ -26,7 +26,16 @@
         <label for="eventDuration">Event Duration:</label>
         <input type="text" id="eventDuration" v-model="eventDuration" disabled class="input-field" />
       </div>
-      <PasswordField v-model="event.password" />
+      <div class="form-group">
+        <label for="eventPassword">Password:</label>
+        <div class="input-group relative">
+          <input :type="showPassword ? 'text' : 'password'" id="eventPassword" v-model="event.password" required
+            class="input-field password-input" />
+          <button type="button" @click="togglePasswordVisibility" class="password-toggle">
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+      </div>
 
       <button type="submit" class="submit-btn">Create Event</button>
     </form>
@@ -58,6 +67,10 @@ const contractsApi = new ContractsApi();
 const eth = useEthereumStore();
 const showPassword = ref(false);
 
+function togglePasswordVisibility() {
+  showPassword.value = !showPassword.value;
+}
+
 const event = ref({
   endorseees: [] as { name: string; address: string }[],
   name: '',
@@ -86,6 +99,8 @@ function addEndorsee(endorsee: { name: string; address: string }) {
 function calculateEventDuration() { }
 
 function createEvent() {
+
+  console.log("password: ", event.value.password);
   const hashedPassword = CryptoJS.SHA256(event.value.password).toString();
   event.value.password = hashedPassword;
 

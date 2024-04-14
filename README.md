@@ -3,6 +3,12 @@
 ## Overview
 Erdorsis, made @ETHDam'24 is a platform for event feedback management. It allows event organizers to create events and selectively whitelist companies, workshops, and other entities to host their own events. Meanwhile, users can join these events and leave endorsements, enriching the overall event experience.
 
+Contract address:
+https://explorer.oasis.io/testnet/sapphire/address/0xeCcC3f1D9Bed269435F5737B6718Fc0F86d1b0E2
+
+Live Demo:
+https://demo-starter-frontend-git-fronttanguy-cleanerzkps-projects.vercel.app/#/
+
 ## Features
 
 ### For Event Organizers

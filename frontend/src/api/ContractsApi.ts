@@ -16,8 +16,8 @@ export default class ContractsApi {
     ContractsApi.events.set(mockEvent2.id, mockEvent2);
   }
 
-  async submitFeedback(feedback: string, password: string) {
-    console.log(`submitFeedback ${feedback}, ${password}`);
+  async submitFeedback(eventId: string, feedback: string, password: string) {
+    console.log(`submitFeedback ${eventId}, ${feedback}, ${password}`);
   }
 
   async claimFeedback(password: string): Promise<string> {

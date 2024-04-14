@@ -2,7 +2,7 @@
   <div class="form-group">
     <label for="eventPassword">Password:</label>
     <div class="input-group relative">
-      <input :type="showPassword ? 'text' : 'password'" id="eventPassword" v-model="password" required
+      <input :type="showPassword ? 'text' : 'password'" id="eventPassword" :value="value" required
         class="input-field password-input" />
       <button type="button" @click="togglePasswordVisibility" class="password-toggle">
         {{ showPassword ? 'Hide' : 'Show' }}
@@ -15,7 +15,9 @@
 import { ref } from 'vue';
 
 const showPassword = ref(false);
-const password = ref('');
+const props = defineProps({
+  value: String,
+});
 
 function togglePasswordVisibility() {
   showPassword.value = !showPassword.value;

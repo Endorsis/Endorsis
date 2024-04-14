@@ -16,7 +16,7 @@ describe('Events', function () {
   });
 
   describe('newEvent', async function () {
-    it('Should emit EventCreated event', async function () {
+    it('Event data added to contract storage', async function () {
       const myEventsAddress = await deployEvents();
       const myEventsContract = await ethers.getContractAt('Events', myEventsAddress);
 

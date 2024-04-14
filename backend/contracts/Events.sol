@@ -14,8 +14,8 @@ contract Events {
     struct EventDetails {
         string eventName;
         string eventDescription;
-        uint8 startDate;
-        uint8 endDate;
+        uint256 startDate;
+        uint256 endDate;
         bytes32 passwordHash;
         mapping(bytes => Endorsee) endorseeRecords;
     }
@@ -50,8 +50,8 @@ contract Events {
     function newEvent(
         string memory _eventName,
         string memory _eventDescription,
-        uint8 _startDate,
-        uint8 _endDate,
+        uint256 _startDate,
+        uint256 _endDate,
         string memory _eventPasswordString,
         address[] memory _newEndorseeAddresses,
         string[] memory _newEndorseeNames

@@ -7,6 +7,6 @@ export class EndorseeModel {
   constructor(name: string, address: string) {
     this.name = name;
     this.address = address;
-    this.feedback = [];
+    this.feedback = Array();
   }
 }

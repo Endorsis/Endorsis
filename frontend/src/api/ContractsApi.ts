@@ -6,14 +6,46 @@ export default class ContractsApi {
   private static events: Map<string, EventModel> = new Map();
 
   constructor() {
-    const mockEndorsee = new EndorseeModel('Mock Endorsee', '0xMockAddress');
-    const mockEvent = new EventModel('95ccae2f78868f3e2a4bd22e796701461f993d22373068bf27edee61d50aa3de', 'Event Completed', 'This is a mock event', [mockEndorsee], '2022-01-01', '2022-12-31', 'mockPassword');
-    ContractsApi.events.set(mockEvent.id, mockEvent);
+
+    this.createEvent(
+      'Event Completed', 
+      'This is a mock event', 
+      [
+        { 
+          name: 'Mock Endorsee',
+          address: '0xMockAddress',
+          feedback: [] 
+        },
+      ], 
+      '2022-01-01', 
+      '2022-12-31', 
+      'aa78ea657e8cd58aa5bab0d75a4d1dae04865864b07139b622ea689e5fa19730'
+    );
+
+    this.createEvent(
+      'Event Uncompleted', 
+      'This is a mock event', 
+      [
+        { 
+          name: 'Mock Endorsee',
+          address: '0xMockAddress',
+          feedback: []
+        },
+      ], 
+      '2022-01-01', 
+      '2024-04-15', 
+      'aa78ea657e8cd58aa5bab0d75a4d1dae04865864b07139b622ea689e5fa19730'
+    );
+
+    // const mockEndorsee = new EndorseeModel('Mock Endorsee', '0xMockAddress');
+    // // password mockPassword
+    // const mockEvent = new EventModel('95ccae2f78868f3e2a4bd22e796701461f993d22373068bf27edee61d50aa3de', 'Event Completed', 'This is a mock event', [mockEndorsee], '2022-01-01', '2022-12-31', 'aa78ea657e8cd58aa5bab0d75a4d1dae04865864b07139b622ea689e5fa19730');
+    // ContractsApi.events.set(mockEvent.id, mockEvent);
 
 
-    const mockEndorsee2 = new EndorseeModel('Not completed', '0xMockAddress');
-    const mockEvent2 = new EventModel('95ccae2f78868f3e2a4bd22e796701461f993d22373068bf27edee61d50aa3d2', 'Event Uncompleted', 'This is a mock event', [mockEndorsee2], '2022-01-01', '2024-04-15', 'mockPassword');
-    ContractsApi.events.set(mockEvent2.id, mockEvent2);
+    // const mockEndorsee2 = new EndorseeModel('Not completed', '0xMockAddress');
+    // const mockEvent2 = new EventModel('95ccae2f78868f3e2a4bd22e796701461f993d22373068bf27edee61d50aa3d2', 'Event Uncompleted', 'This is a mock event', [mockEndorsee2], '2022-01-01', '2024-04-15', 'aa78ea657e8cd58aa5bab0d75a4d1dae04865864b07139b622ea689e5fa19730');
+    // ContractsApi.events.set(mockEvent2.id, mockEvent2);
   }
 
   async submitFeedback(eventId: string, endorsee_address: string, feedback: string, password: string) {
@@ -21,10 +53,9 @@ export default class ContractsApi {
 
     const event = await this.getEventsById(eventId);
     const event_password = event?.password
+    const hashedPassword = CryptoJS.SHA256(password).toString();
 
-    console.log(event_password);
-    console.log(password);
-    if (true){
+    if (hashedPassword === event_password){
       const endorsee = event?.endorseees.find(e => e.address === endorsee_address);
 
       console.log(endorsee);
